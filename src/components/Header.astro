@@ -1,0 +1,58 @@
+---
+// src/components/Header.astro
+---
+<header>
+    <div class="container">
+        <a href="#" class="info-badge">
+            <img src="/icon.png" alt="Icon" class="badge-icon" />
+            <span class="badge-text"><strong>RAGEN</strong></span>
+        </a>
+    </div>
+  </header>
+  
+  <style>
+    header {
+      background-color: #fff; /* White background for header */
+      border-bottom: 1px solid #e0e0e0; /* Subtle border */
+      height: var(--header-height, 60px); /* Use variable from global or default */
+      display: flex;
+      align-items: center;
+      position: sticky; /* Make header sticky? Optional */
+      top: 0;
+      z-index: 10;
+    }
+  
+    .container {
+      max-width: var(--page-max-width, 1100px); /* Match max width */
+      margin: 0 auto;
+      padding: 0 1rem; /* Padding on sides */
+      display: flex;
+      justify-content: space-between; /* Pushes logo left, nav right */
+      align-items: center;
+      width: 100%;
+    }
+  
+    .logo {
+      text-decoration: none;
+      color: #333;
+      font-size: 0.9rem;
+    }
+  
+    .logo strong {
+      font-weight: 700; /* Make STORM bold */
+    }
+  
+    .signin-button {
+      background-color: #f0f0f0; /* Light grey button */
+      color: #333;
+      padding: 0.4em 0.8em;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+    }
+  
+    .signin-button:hover {
+      background-color: #e0e0e0; /* Darker on hover */
+    }
+  </style>

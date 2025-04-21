@@ -1,0 +1,132 @@
+:root {
+    --page-max-width: 1100px;
+    --header-height: 60px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
+    background-image: url('/src/assets/background-blurred.svg');
+    /* Note: You may need to move this file to public/ or ensure your Astro config handles /src/ paths */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #f8f9fa; /* Fallback color */
+}
+
+main {
+   padding-top: var(--header-height);
+   flex-grow: 1; /* Allows main content to push footer down */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button, a.button {
+   display: inline-block;
+   padding: 0.6em 1.2em;
+   border: none;
+   border-radius: 6px;
+   cursor: pointer;
+   font-weight: 500;
+   text-decoration: none;
+   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@keyframes reveal {
+from {
+    opacity: 0;
+    transform: translateY(15px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+.reveal-char {
+display: inline-block;
+opacity: 0;
+animation: reveal 1.5s forwards;
+}
+
+@keyframes revealSubtitle {
+from {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+to {
+    opacity: 1;
+    transform: translateX(0);
+}
+}
+
+.reveal-char-subtitle {
+display: inline-block;
+opacity: 0;
+animation: revealSubtitle 1s forwards;
+}
+
+/* 徽章的默认样式 (未悬停时) */
+.info-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    /* 1. 默认背景色设置为白色 */
+    background-color: #ffffff;
+    /* 或者如果你希望它完全透明，则用: */
+    /* background-color: transparent; */
+  
+    /* 2. 添加一个边框，这样在白色/透明背景下也能看到形状 */
+    border: 1px solid #ced4da; /* 浅灰色边框 - 可调整 */
+  
+    border-radius: 20px;
+    gap: 8px;
+    text-decoration: none;
+    color: #212529;      /* 默认文字颜色 */
+    font-size: 1rem;
+  
+    /* 3. 添加过渡效果，让背景色和边框色变化更平滑 */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* 鼠标悬停时的样式 */
+  .info-badge:hover {
+    /* 4. 悬停时改变背景色 */
+    background-color: #e9ecef; /* 之前用的浅灰色 */
+  
+    /* 5. (可选) 悬停时可以改变边框颜色，或者让边框和背景色一致 */
+    border-color: #e9ecef; /* 让边框融入背景 */
+    /* border-color: #adb5bd; */ /* 或者用一个稍深的颜色 */
+  
+    /* 6. (可选) 悬停时可以改变文字颜色 */
+    /* color: #000; */
+  
+    cursor: pointer; /* 7. (可选) 鼠标悬停时显示手型光标，提示可点击 */
+  }
+  
+  /* 图标和文字样式通常保持不变 */
+  .badge-icon {
+    height: 24px;
+    width: auto;
+  }
+  
+  .badge-text {
+    line-height: 1;
+  }

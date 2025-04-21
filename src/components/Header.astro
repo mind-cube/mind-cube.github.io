@@ -1,58 +1,141 @@
 ---
 // src/components/Header.astro
+// Added GitHub icon link to the right of the navigation
 ---
 <header>
-    <div class="container">
-        <a href="#" class="info-badge">
-            <img src="/icon.png" alt="Icon" class="badge-icon" />
-            <span class="badge-text"><strong>RAGEN</strong></span>
-        </a>
-    </div>
-  </header>
-  
-  <style>
-    header {
-      background-color: #fff; /* White background for header */
-      border-bottom: 1px solid #e0e0e0; /* Subtle border */
-      height: var(--header-height, 60px); /* Use variable from global or default */
+  <div class="container">
+      <a href="#hero" class="info-badge">
+          <img src="/icon.png" alt="Icon" class="badge-icon" />
+          <span class="badge-text"><strong>RAGEN</strong></span>
+      </a>
+
+      <div class="nav-wrapper">
+          <nav class="main-nav">
+              <ul>
+                  <li><a href="#preview">Preview</a></li>
+                  <li><a href="#charts">Dynamic Charts</a></li>
+                  <li><a href="#findings">Findings</a></li>
+                  <li><a href="#data">Data Preview</a></li>
+              </ul>
+          </nav>
+
+          <a
+              href="https://github.com/RAGEN-AI/RAGEN"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="github-link"
+              aria-label="GitHub Repository"
+          >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="github-icon" role="img" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+              </svg>
+          </a>
+      </div>
+  </div>
+</header>
+
+<style>
+  header {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    height: var(--header-height, 60px);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .container {
+    max-width: var(--page-max-width, 1100px);
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between; /* Logo left, nav-wrapper right */
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Wrapper for right-aligned items */
+  .nav-wrapper {
       display: flex;
       align-items: center;
-      position: sticky; /* Make header sticky? Optional */
-      top: 0;
-      z-index: 10;
-    }
-  
-    .container {
-      max-width: var(--page-max-width, 1100px); /* Match max width */
-      margin: 0 auto;
-      padding: 0 1rem; /* Padding on sides */
+      gap: 1.8rem; /* Adjust gap between nav and GitHub icon */
+  }
+
+  /* Main navigation styles */
+  .main-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
       display: flex;
-      justify-content: space-between; /* Pushes logo left, nav right */
+      gap: 1.5rem; /* Spacing between nav items */
+  }
+
+  .main-nav li {
+      display: inline-block;
+  }
+
+  .main-nav a {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  }
+
+  .main-nav a:hover,
+  .main-nav a:focus {
+      color: #2a2f6c;
+  }
+
+  /* GitHub link styles */
+  .github-link {
+      display: inline-flex; /* To align icon correctly */
       align-items: center;
-      width: 100%;
-    }
-  
-    .logo {
-      text-decoration: none;
-      color: #333;
-      font-size: 0.9rem;
-    }
-  
-    .logo strong {
-      font-weight: 700; /* Make STORM bold */
-    }
-  
-    .signin-button {
-      background-color: #f0f0f0; /* Light grey button */
-      color: #333;
-      padding: 0.4em 0.8em;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: background-color 0.2s ease;
-    }
-  
-    .signin-button:hover {
-      background-color: #e0e0e0; /* Darker on hover */
-    }
-  </style>
+      color: #333; /* Icon color */
+      line-height: 0; /* Prevent extra space */
+  }
+
+  .github-icon {
+      width: 24px;  /* Adjust size as needed */
+      height: 24px; /* Adjust size as needed */
+      fill: currentColor; /* Inherit color from parent link */
+      transition: color 0.2s ease;
+  }
+
+  .github-link:hover,
+  .github-link:focus {
+      color: #2a2f6c; /* Darker color on hover/focus */
+  }
+
+  /* Logo styles */
+  .info-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: #ffffff;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    gap: 8px;
+    text-decoration: none;
+    color: #212529;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .info-badge:hover {
+    background-color: #e9ecef;
+    border-color: #e9ecef;
+    cursor: pointer;
+  }
+
+  .badge-icon {
+    height: 24px;
+    width: auto;
+  }
+
+  .badge-text {
+    line-height: 1;
+  }
+</style>

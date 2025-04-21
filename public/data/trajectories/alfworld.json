@@ -1,0 +1,98 @@
+{
+  "taskName": "ALFWorld Navigation",
+  "taskDescription": "LLM agent navigating in a virtual household environment to complete tasks",
+  "trajectories": {
+    "traj1": {
+      "name": "Find Apple Task",
+      "description": "The agent navigates through a kitchen to find an apple",
+      "totalSteps": 4,
+      "success": true,
+      "reasoningScore": "9.2/10",
+      "completionTime": "8.5s",
+      "steps": [
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/kitchen_start.png",
+            "description": "Agent starts in the kitchen entrance. Various objects are visible including counters, a fridge, and cabinets."
+          },
+          "reasoning": "I need to find an apple. In a kitchen, apples might be in the fridge, on a counter, or in a fruit bowl. Let me first scan the visible area.",
+          "action": "look_around()"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/kitchen_scan.png",
+            "description": "Agent observes a counter with some items, a closed fridge, and cabinets."
+          },
+          "reasoning": "I don't see an apple in plain sight. Apples are usually stored in refrigerators to keep them fresh. I should check the fridge first.",
+          "action": "go_to('fridge')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/fridge_closed.png",
+            "description": "Agent is in front of the closed fridge."
+          },
+          "reasoning": "Now I need to open the fridge to see its contents and check for the apple.",
+          "action": "open('fridge')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/fridge_open.png",
+            "description": "The fridge is open, revealing various food items including an apple on the middle shelf."
+          },
+          "reasoning": "I can see an apple on the middle shelf of the fridge. This completes my task of finding an apple.",
+          "action": "take('apple')"
+        }
+      ]
+    },
+    "traj2": {
+      "name": "Make Coffee Task",
+      "description": "The agent prepares coffee using ingredients and appliances in the kitchen",
+      "totalSteps": 5,
+      "success": true,
+      "reasoningScore": "8.9/10",
+      "completionTime": "11.3s",
+      "steps": [
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/kitchen_start.png",
+            "description": "Agent starts in the kitchen. Various appliances and cabinets are visible."
+          },
+          "reasoning": "To make coffee, I need coffee grounds, a coffee machine, and water. First, I should locate the coffee machine.",
+          "action": "go_to('counter')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/kitchen_counter.png",
+            "description": "Agent is at the counter. A coffee machine is visible."
+          },
+          "reasoning": "I can see the coffee machine. Now I need coffee grounds which are likely in a cabinet or pantry.",
+          "action": "go_to('cabinet')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/cabinet_closed.png",
+            "description": "Agent is in front of a closed cabinet."
+          },
+          "reasoning": "I need to open the cabinet to check for coffee grounds.",
+          "action": "open('cabinet')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/cabinet_open.png",
+            "description": "The cabinet is open, showing various items including coffee grounds."
+          },
+          "reasoning": "I found the coffee grounds. I should take them and return to the coffee machine.",
+          "action": "take('coffee_grounds')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/images/alfworld/coffee_making.png",
+            "description": "Agent is holding coffee grounds near the coffee machine."
+          },
+          "reasoning": "Now I need to use the coffee grounds with the coffee machine to make coffee.",
+          "action": "use('coffee_grounds', 'coffee_machine')"
+        }
+      ]
+    }
+  }
+} 

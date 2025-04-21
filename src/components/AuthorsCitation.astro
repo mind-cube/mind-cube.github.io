@@ -1,0 +1,104 @@
+---
+// AuthorsCitation.astro - Displays the authors list and citation information
+---
+<section id="authors-citation" class="content-section alt-background">
+  <div class="section-container">
+    <h2 class="section-title">Authors</h2>
+
+    {/* Authors List */}
+    <div class="authors-list">
+        <p>
+          <a href="https://zihanwang314.github.io/">Zihan Wang</a><sup class="affiliation-marker">*1</sup>,
+          <a href="https://jameskrw.github.io/">Kangrui Wang</a><sup class="affiliation-marker">*1</sup>,
+          <a href="https://qinengwang-aiden.github.io/">Qineng Wang</a><sup class="affiliation-marker">*1</sup>,
+          <a href="https://williamzhangsjtu.github.io/">Pingyue Zhang</a><sup class="affiliation-marker">*1</sup>,
+          <a href="https://scholar.google.com/citations?user=WR875gYAAAAJ&hl=en">Linjie Li</a><sup class="affiliation-marker">*2</sup>
+        </p>
+        <p>
+          <a href="https://zyang-ur.github.io/">Zhengyuan Yang</a><sup class="affiliation-marker">2</sup>,
+          <a href="https://www.linkedin.com/in/kefan-yu-22723a25b/en/">Kefan Yu</a><sup class="affiliation-marker">1</sup>,
+          <a href="https://www.linkedin.com/in/menhguin/?originalSubdomain=sg">Minh Nhat Nguyen</a><sup class="affiliation-marker">4</sup>,
+          <a href="https://suif.stanford.edu/~lam/">Monica Lam</a><sup class="affiliation-marker">3</sup>,
+          <a href="https://2prime.github.io/">Yiping Lu</a><sup class="affiliation-marker">1</sup>
+        </p>
+        <p>
+          <a href="https://kyunghyuncho.me/">Kyunghyun Cho</a><sup class="affiliation-marker">5</sup>,
+          <a href="https://jiajunwu.com/">Jiajun Wu</a><sup class="affiliation-marker">3</sup>,
+          <a href="https://profiles.stanford.edu/fei-fei-li">Li Fei-Fei</a><sup class="affiliation-marker">3</sup>,
+          <a href="https://www.microsoft.com/en-us/research/people/lijuanw/">Lijuan Wang</a><sup class="affiliation-marker">2</sup>,
+          <a href="https://homes.cs.washington.edu/~yejin/">Yejin Choi</a><sup class="affiliation-marker">2</sup>,
+          <a href="https://limanling.github.io/">Manling Li</a><sup class="affiliation-marker">1</sup>
+        </p>
+        <p class="equal-contribution">
+          <sup class="affiliation-marker">*</sup> Equal Contribution
+        </p>
+        <p class="affiliations">
+          <sup class="affiliation-marker">1</sup> Northwestern University &nbsp;&nbsp;
+          <sup class="affiliation-marker">2</sup> Microsoft Research &nbsp;&nbsp;
+          <sup class="affiliation-marker">3</sup> Stanford University &nbsp;&nbsp;
+          <sup class="affiliation-marker">4</sup> Nanyang Technological University &nbsp;&nbsp;
+          <sup class="affiliation-marker">5</sup> New York University &nbsp;&nbsp;
+        </p>
+    </div>
+
+    {/* Citation Block */}
+    <div class="citation-section">
+      <p>If you find RAGEN useful in your research, please cite our paper:</p>
+      <div class="citation-block">
+        <div class="code-container">
+          <button id="copy-button" aria-label="Copy citation" class="copy-button-corner">
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+            <svg class="check-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+          <pre><code>{`@misc{ragen_placeholder_2025,
+  title={RAGEN: Training Agents by Reinforcing Reasoning},
+  author={Wang, Zihan and Wang, Kangrui and Wang, Qineng and Zhang, Pingyue and Li, Linjie and Yang, Zhengyuan and Yu, Kefan and Nguyen, Minh Nhat and Lam, Monica and Lu, Yiping and Cho, Kyunghyun and Wu, Jiajun and Li, Fei-Fei and Wang, Lijuan and Choi, Yejin and Li, Manling},
+  year={2025},
+  publisher={GitHub},
+  journal={GitHub repository},
+  howpublished={\\url{https://github.com/RAGEN-AI/RAGEN}},
+  note={Work in progress}
+}`}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Citation copy functionality
+    const copyButton = document.getElementById('copy-button');
+    const codeElement = document.querySelector('.citation-block pre code');
+    
+    if (copyButton && codeElement) {
+      copyButton.addEventListener('click', async () => {
+        const citationText = codeElement.textContent || '';
+        
+        try {
+          await navigator.clipboard.writeText(citationText);
+          
+          // Visual feedback
+          copyButton.classList.add('copied');
+          
+          // Reset after 2 seconds
+          setTimeout(() => {
+            copyButton.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy: ', err);
+          copyButton.classList.add('copy-error');
+          
+          setTimeout(() => {
+            copyButton.classList.remove('copy-error');
+          }, 2000);
+        }
+      });
+    }
+  });
+</script> 

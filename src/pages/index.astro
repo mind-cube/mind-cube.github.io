@@ -1,183 +1,39 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import PreviewSection from '../components/PreviewSection.astro';
+import ChartsSection from '../components/ChartsSection.astro';
+import FindingsSection from '../components/FindingsSection.astro';
+import TrajectoryViewer from '../components/TrajectoryViewer.astro';
+import AuthorsCitation from '../components/AuthorsCitation.astro';
+
+// Import component-specific styles
+import '../styles/section.css';
+import '../styles/hero.css';
+import '../styles/authors.css';
+import '../styles/resources.css';
+import '../styles/trajectoryViewer.css';
 
 const pageTitle = "RAGEN from Northwestern University";
 ---
 <Layout title={pageTitle}>
-  <section class="hero-section">
-    <!-- <div class="badge">
-      <span class="dot">•</span> We thank Microsoft Azure for cloud credits
-    </div> -->
-    <div class="title-wrapper">
-		<img src="/icon.png" alt="RAGEN Icon" class="title-icon" />
-		<h1 class="main-title" id="animated-title">RAGEN</h1>
-	</div>
-    <p class="subtitle" id="animated-subtitle">Training Agents by Reinforcing Reasoning</p>
-    <p class="description">RAGEN leverages reinforcement learning to train LLM reasoning agents in interactive, stochastic environments.</p>
-    <a href="https://github.com/RAGEN-AI/RAGEN" class="cta-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="button-icon" aria-hidden="true">
-			<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
-		  </svg>
-        <span class="button-text">Get Started →</span>
-    </a>
-    <div class="diagram-placeholder">
-      <img src="/teaser.png" alt="Diagram placeholder" style=""/>
-      <p style="text-align: center; color: #888;">Comparison between RAGEN and existing LLM training methods.</p>
-    </div>
-  </section>
+  <Hero />
+  <PreviewSection />
+  <ChartsSection />
+  <FindingsSection />
+  <TrajectoryViewer />
+  <AuthorsCitation />
 </Layout>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Animate main title
-    const titleElement = document.getElementById('animated-title');
-    if (titleElement && titleElement.textContent) {
-      const text = titleElement.textContent.trim();
-      titleElement.innerHTML = ''; // Clear existing text
+  import { initTrajectoryViewer } from '../scripts/trajectoryViewer';
+  import { initCitationCopy } from '../scripts/citation';
 
-      text.split('').forEach((char, index) => {
-        const span = document.createElement('span');
-        span.textContent = char;
-        // Apply the animation class
-        span.className = 'reveal-char';
-        // Apply staggered delay using inline style (CSS variable could also work)
-        span.style.animationDelay = `${index * 0.07}s`; // Adjust 0.07s for speed
-        // Handle space characters - prevent them from collapsing
-        if (char === ' ') {
-           span.style.display = 'inline'; // Ensure space takes up space
-        }
-        titleElement.appendChild(span);
-      });
-      
-      // Get the last animation delay to know when to start subtitle animation
-      const lastCharDelay = (text.length - 1) * 0.07;
-      
-      // Animate subtitle after title animation
-      const subtitleElement = document.getElementById('animated-subtitle');
-      if (subtitleElement && subtitleElement.textContent) {
-        const subtitleText = subtitleElement.textContent.trim();
-        subtitleElement.innerHTML = ''; // Clear existing text
-        
-        subtitleText.split('').forEach((char, index) => {
-          const span = document.createElement('span');
-          span.textContent = char;
-          span.className = 'reveal-char-subtitle';
-          // Start subtitle animation after title animation finishes
-          span.style.animationDelay = `${lastCharDelay + 0.5 + (index * 0.03)}s`;
-          if (char === ' ') {
-            span.style.display = 'inline';
-          }
-          subtitleElement.appendChild(span);
-        });
-      }
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize citation copy functionality
+    initCitationCopy();
+    
+    // Initialize trajectory viewer
+    initTrajectoryViewer();
   });
 </script>
-
-<style>
-  .hero-section {
-    max-width: 1000px;
-    margin: 4rem auto;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .badge {
-    display: inline-block;
-    background-color: #e7e7ff;
-    color: #4c4fce;
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .badge .dot {
-     color: #9fa1f4;
-     margin-right: 0.4em;
-  }
-
-  .title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .title-icon {
-    height: 60px;
-    width: auto;
-    flex-shrink: 0;
-  }
-
-  .main-title {
-    font-size: 3.75rem;
-    font-weight: 800;
-    color: #2a2f6c;
-    min-height: 1.2em;
-    flex-shrink: 0;
-  }
-
-  .subtitle {
-    font-size: 2.75rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-
-  .description {
-    font-size: 1.5rem;
-    color: #555;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-  }
-
-
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-
-    background-color: #2d333a;
-    padding: 0.9rem 1.6rem;
-    border-radius: 30px;
-    text-decoration: none;
-    border: none;
-    box-shadow: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-  }
-
-  .button-icon {
-    height: 1.4em;
-    width: auto;
-	fill: white;
-  }
-
-  .button-text {
-  background: white;
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-
-  font-size: 1.1rem;
-  font-weight: 600;
-  display: inline-block;
-}
-
-  .cta-button:hover {
-    background-color: #444;
-    transform: translateY(-2px);
-    box-shadow: none;
-  }
-
-  .diagram-placeholder {
-    margin-top: 3rem;
-  }
-
-</style>

@@ -14,7 +14,7 @@ import '../styles/authors.css';
 import '../styles/resources.css';
 import '../styles/trajectoryViewer.css';
 
-const pageTitle = "RAGEN from Northwestern University";
+const pageTitle = "RAGEN from NU MLL Lab";
 ---
 <Layout title={pageTitle}>
   <Hero />
@@ -35,5 +35,54 @@ const pageTitle = "RAGEN from Northwestern University";
     
     // Initialize trajectory viewer
     initTrajectoryViewer();
+
+    // Text animation for hero section
+    const animateTitle = () => {
+      const titleElement = document.getElementById('animated-title');
+      const subtitleElement = document.getElementById('animated-subtitle');
+      
+      if (titleElement && subtitleElement) {
+        // Split title text into individual characters for animation
+        const titleText = titleElement.innerText;
+        titleElement.innerHTML = '';
+        
+        for (let i = 0; i < titleText.length; i++) {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'reveal-char';
+          charSpan.style.animationDelay = `${i * 0.1}s`;
+          
+          // 特殊处理空格，确保它们能正确显示
+          if (titleText[i] === ' ') {
+            charSpan.innerHTML = '&nbsp;';
+          } else {
+            charSpan.innerText = titleText[i];
+          }
+          
+          titleElement.appendChild(charSpan);
+        }
+        
+        // Split subtitle text into individual characters for animation
+        const subtitleText = subtitleElement.innerText;
+        subtitleElement.innerHTML = '';
+        
+        for (let i = 0; i < subtitleText.length; i++) {
+          const charSpan = document.createElement('span');
+          charSpan.className = 'reveal-char-subtitle';
+          charSpan.style.animationDelay = `${i * 0.05 + 0.5}s`; // Start after title animation
+          
+          // 特殊处理空格，确保它们能正确显示
+          if (subtitleText[i] === ' ') {
+            charSpan.innerHTML = '&nbsp;';
+          } else {
+            charSpan.innerText = subtitleText[i];
+          }
+          
+          subtitleElement.appendChild(charSpan);
+        }
+      }
+    };
+    
+    // Run animation
+    animateTitle();
   });
 </script>

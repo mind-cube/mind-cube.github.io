@@ -35,8 +35,8 @@ jobs:
         run: npm ci # Or pnpm install --frozen-lockfile, yarn install --frozen-lockfile
       - name: Build Astro site
         run: npm run build # Or pnpm build, yarn build
-      # - name: Add .nojekyll file # Uncomment this step if your build script doesn't create .nojekyll automatically
-      #   run: touch ./dist/.nojekyll
+      - name: Add .nojekyll file
+        run: touch ./dist/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

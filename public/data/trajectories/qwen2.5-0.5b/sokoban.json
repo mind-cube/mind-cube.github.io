@@ -1,0 +1,103 @@
+{
+  "taskName": "Sokoban",
+  "taskDescription": "LLM agent solving Sokoban puzzles by pushing boxes to designated locations",
+  "trajectories": {
+    "traj1": {
+      "name": "Simple Puzzle Solution",
+      "description": "Agent solves a simple Sokoban puzzle with two boxes",
+      "totalSteps": 4,
+      "success": true,
+      "validActionRate": "100%",
+      "effectiveActionRate": "100%",
+      "steps": [
+        {
+          "state": {
+            "image": "/data/trajectories/qwen2.5-0.5b/sokoban/traj1/step1.png",
+            "description": "Initial puzzle state. Agent (A) is in the middle, with two boxes (X) nearby and two target locations (T)."
+          },
+          "reasoning": "I need to push both boxes onto the target locations. I'll start by moving up to position myself to push the top box.",
+          "action": "move('up')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/qwen2.5-0.5b/sokoban/traj1/step2.png",
+            "description": "Agent has moved up and is now positioned to push the box."
+          },
+          "reasoning": "Now I can push the top box to the right toward the target location.",
+          "action": "push('right')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/qwen2.5-0.5b/sokoban/traj1/step3.png",
+            "description": "The top box is now on its target. Agent needs to move to the second box."
+          },
+          "reasoning": "The first box is in place. I need to move down and left to position myself for pushing the second box.",
+          "action": "move('down_left')"
+        },
+        {
+          "state": {
+            "image": "/data/trajectories/qwen2.5-0.5b/sokoban/traj1/step4.png",
+            "description": "Agent is positioned to push the second box to its target."
+          },
+          "reasoning": "Now I can push the second box up to its target location, which will complete the puzzle.",
+          "action": "push('up')"
+        }
+      ]
+    },
+    "traj2": {
+      "name": "Code-Only Solution",
+      "description": "Text-based representation of Sokoban with code but no images",
+      "totalSteps": 3,
+      "success": true,
+      "validActionRate": "100%",
+      "effectiveActionRate": "100%",
+      "steps": [
+        {
+          "state": {
+            "description": "Initial state of the Sokoban puzzle represented as ASCII art:\n```\n#######\n#.....#\n#..B..#\n#.PAB.#\n#.....#\n#######\n```\nWhere P=Player, B=Box, A=Target, #=Wall, .=Empty space"
+          },
+          "reasoning": "Looking at the ASCII representation, I need to push both boxes onto the targets. I'll first push the box directly to my right onto the target that's also to the right.",
+          "action": "push('right')"
+        },
+        {
+          "state": {
+            "description": "After pushing the first box:\n```\n#######\n#.....#\n#..B..#\n#.P.AB#\n#.....#\n#######\n```\nThe right box is now on a target. Next I need to get into position to push the remaining box to the other target."
+          },
+          "reasoning": "Now I need to move up and push the remaining box down onto the target below it.",
+          "action": "move('up')"
+        },
+        {
+          "state": {
+            "description": "After moving up:\n```\n#######\n#.....#\n#.PB..#\n#...AB#\n#.....#\n#######\n```\nI'm now in position to push the second box down to its target."
+          },
+          "reasoning": "I can now push the box down to complete the puzzle.",
+          "action": "push('down')"
+        }
+      ]
+    },
+    "traj3": {
+      "name": "Mixed Content",
+      "description": "A solution with mixed image and code steps",
+      "totalSteps": 2,
+      "success": true,
+      "validActionRate": "100%",
+      "effectiveActionRate": "100%",
+      "steps": [
+        {
+          "state": {
+            "image": "/data/trajectories/qwen2.5-0.5b/sokoban/traj3/step1.png",
+            "description": "Starting position with one box and one target"
+          },
+          "reasoning": "I need to push the box onto the target. I'll move right to get behind the box.",
+          "action": "move('right')"
+        },
+        {
+          "state": {
+            "description": "After moving right, the configuration is:\n```\n#####\n#...#\n#.PB#\n#..A#\n#####\n```\nI am now behind the box and can push it down onto the target."
+          },
+          "action": "push('down')"
+        }
+      ]
+    }
+  }
+} 

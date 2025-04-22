@@ -150,7 +150,15 @@ animation: revealSubtitle 1s forwards;
 .button-icon { height: 1.4em; width: auto; fill: white; }
 .button-text { background: white; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; font-size: 1.1rem; font-weight: 600; display: inline-block; }
 .cta-button:hover { background-color: #444; transform: translateY(-2px); box-shadow: none; }
-.diagram-placeholder { margin-top: 3rem; }
+.diagram-placeholder { 
+  margin-top: 3rem; 
+  margin-bottom: 2rem;
+}
+
+.diagram-placeholder img {
+  margin-bottom: 0.6rem;
+}
+
 
 /* Author link styles */
 .authors-list a {
@@ -449,7 +457,7 @@ animation: revealSubtitle 1s forwards;
   margin-right: 0.5rem;
 }
 
-.task-dropdown, .trajectory-dropdown {
+.task-dropdown, .trajectory-dropdown, .model-dropdown {
   padding: 0.6rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -762,4 +770,68 @@ animation: revealSubtitle 1s forwards;
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* 当没有图像时的处理 */
+.state-description:only-child {
+  margin-top: 0;
+}
+
+/* 当没有推理或行动时的处理 */
+.action-content:empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* 状态描述中的代码块样式 */
+.state-description .code-block {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  padding: 1rem;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #374151;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  border: 1px solid #e5e7eb;
+  margin: 0.8rem 0;
+}
+
+/* 当状态描述中只有代码块时去掉上边距 */
+.state-description > .code-block:first-child {
+  margin-top: 0;
+}
+
+.state-description > .code-block:last-child {
+  margin-bottom: 0;
+}
+
+/* 代码块语言标记 */
+.code-language {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  background-color: #e5e7eb;
+  color: #4b5563;
+  border-radius: 0 6px 0 6px;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+/* 确保代码块内的pre标签样式正确 */
+.code-block {
+  position: relative;
+}
+
+.code-block pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }

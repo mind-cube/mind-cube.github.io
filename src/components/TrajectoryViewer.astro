@@ -218,13 +218,13 @@
       try {
         showLoading();
         
-        // 添加时间戳或随机数以防止缓存
+        // Add timestamp or random number to prevent caching
         const timestamp = new Date().getTime();
         const indexUrl = `/data/trajectories/${currentModel}/index.json?t=${timestamp}`;
         console.log("Loading task index from:", indexUrl);
         
         const response = await fetch(indexUrl, { 
-          cache: 'no-store' // 强制不使用缓存
+          cache: 'no-store' // Force not to use cache
         });
         if (!response.ok) {
           throw new Error(`Failed to load task index: ${response.status} ${response.statusText}`);
@@ -269,23 +269,22 @@
           throw new Error(`Task with ID ${taskId} not found`);
         }
         
-        // Load the task data file with model path
-        // 确保使用正确的模型路径
+        // Ensure using the correct model path
         let dataPath = taskInfo.dataFile;
-        // 确保路径包含模型名
+        // Ensure the path includes model name
         if (!dataPath.includes(`/data/trajectories/${currentModel}/`)) {
-          // 完全替换dataPath为正确的路径
-          const fileName = dataPath.split('/').pop(); // 获取文件名
+          // Completely replace dataPath with the correct path
+          const fileName = dataPath.split('/').pop(); // Get the file name
           dataPath = `/data/trajectories/${currentModel}/${fileName}`;
         }
         
-        // 添加时间戳避免缓存
+        // Add timestamp to avoid caching
         const timestamp = new Date().getTime();
         dataPath = `${dataPath}?t=${timestamp}`;
         
         console.log("Loading data from path:", dataPath);
         const response = await fetch(dataPath, {
-          cache: 'no-store' // 强制不使用缓存
+          cache: 'no-store' // Force not to use cache
         });
         if (!response.ok) {
           throw new Error(`Failed to load task data: ${response.status} ${response.statusText}`);
@@ -355,7 +354,7 @@
       const progressBar = document.createElement('div');
       progressBar.className = 'timeline-progress';
       
-      // 如果只有一个step，进度条直接显示100%
+      // If there's only one step, progress bar displays 100%
       if (totalSteps === 1) {
         progressBar.style.width = '100%';
       } else {
@@ -369,7 +368,7 @@
         const step = document.createElement('div');
         step.className = 'timeline-step';
         
-        // 如果只有一个step，将节点放在右侧（100%位置）
+        // If there's only one step, place the node on the right (100% position)
         if (totalSteps === 1) {
           step.style.left = '100%';
         } else {
@@ -435,7 +434,7 @@
         
         // Update progress bar
         if (progressBar) {
-          // 如果只有一个step，进度条保持100%
+          // If there's only one step, keep progress bar at 100%
           if (totalSteps === 1) {
             progressBar.style.width = '100%';
           } else {
@@ -449,16 +448,16 @@
       if (stateImageElement) {
         const imagePath = step.state.image || '';
         
-        // 如果存在图像路径，则显示图像区域，否则隐藏
+        // If image path exists, display the image area, otherwise hide it
         const imageContainer = stateImageElement.closest('.state-image');
         if (imageContainer) {
           if (imagePath) {
             (imageContainer as HTMLElement).style.display = 'block';
             console.log("Loading image from:", imagePath);
             
-            // 防止循环加载错误的方法
+            // Method to prevent cyclic loading errors
             if (imagePath !== '/placeholder-state.png') {
-              // 创建新的Image对象来预加载并检查图片是否存在
+              // Create new Image object to preload and check if the image exists
               const img = new Image();
               img.onload = function() {
                 stateImageElement.src = imagePath;
@@ -472,21 +471,21 @@
               stateImageElement.src = '/placeholder-state.png';
             }
           } else {
-            // 如果没有图像路径，隐藏图像容器
+            // If no image path, hide the image container
             (imageContainer as HTMLElement).style.display = 'none';
           }
         }
       }
       
-      // 处理文本描述，支持代码块
+      // Process text description, support code blocks
       if (stateTextElement) {
         const description = step.state.description || '';
         if (description) {
-          // 检查是否包含代码块标记```
+          // Check if it contains code block markers ```
           if (description.includes('```')) {
-            // 使用正则表达式处理代码块，并保留可能的语言标记
+            // Use regular expression to process code blocks, and keep possible language markers
             const formattedDescription = description.replace(/```([\w]*)?(\r\n|\n)([\s\S]*?)```/g, (match, lang, newline, code) => {
-              // 提取代码内容和语言标识符
+              // Extract code content and language identifier
               const language = lang ? lang.trim() : '';
               const codeContent = code.trim();
               const languageClass = language ? ` language-${language}` : '';
@@ -494,14 +493,14 @@
               return `<div class="code-block${languageClass}"><pre>${codeContent}</pre>${language ? `<div class="code-language">${language}</div>` : ''}</div>`;
             });
             
-            // 处理没有语言标识符的普通代码块
+            // Process plain code blocks without language identifiers
             const finalDescription = formattedDescription.replace(/```([\s\S]*?)```/g, (match, code) => {
               return `<div class="code-block"><pre>${code.trim()}</pre></div>`;
             });
             
             stateTextElement.innerHTML = finalDescription;
           } else {
-            // 没有代码块，直接设置文本
+            // No code blocks, directly set text
             stateTextElement.textContent = description;
           }
           stateTextElement.closest('.state-description')?.classList.remove('hidden');
@@ -511,7 +510,7 @@
         }
       }
       
-      // 处理推理文本
+      // Process reasoning text
       if (reasoningTextElement) {
         const reasoning = step.reasoning || '';
         const reasoningContainer = reasoningTextElement.closest('.llm-reasoning');
@@ -525,7 +524,7 @@
         }
       }
       
-      // 处理动作文本
+      // Process action text
       if (actionTextElement) {
         const action = step.action || '';
         const actionContainer = actionTextElement.closest('.llm-action');

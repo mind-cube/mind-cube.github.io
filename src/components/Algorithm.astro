@@ -2,7 +2,7 @@
 // Algorithm.astro - Displays information about the StarPO algorithm framework
 import { Fragment } from 'astro/jsx-runtime'
 
-// 预先定义数学公式变量
+// Predefined math formula variables
 const mathFormulas = {
   state: "\\(s_t\\)",
   action: "\\(a_t\\)",
@@ -35,7 +35,7 @@ const mathFormulas = {
     <script is:inline src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <!-- 将算法流程图移到图片上方 -->
+    <!-- Move algorithm flowchart above the image -->
     <div class="algorithm-visualization">
       <div class="visual-container">
         <div class="flow-step" id="step-initial">
@@ -778,7 +778,7 @@ const mathFormulas = {
       });
     }
 
-    // 修改初始化显示：保持两个卡片折叠
+    // Modify initialization display: keep both cards collapsed
     if (mdpContent && mdpCard) {
       mdpContent.classList.remove('active');
       const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;

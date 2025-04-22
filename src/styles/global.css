@@ -83,45 +83,45 @@ opacity: 0;
 animation: revealSubtitle 1s forwards;
 }
 
-/* 徽章的默认样式 (未悬停时) */
+/* Default badge style (when not hovered) */
 .info-badge {
     display: inline-flex;
     align-items: center;
     padding: 8px 15px;
-    /* 1. 默认背景色设置为白色 */
+    /* 1. Set default background color to white */
     background-color: #ffffff;
-    /* 或者如果你希望它完全透明，则用: */
+    /* Or if you want it completely transparent, use: */
     /* background-color: transparent; */
   
-    /* 2. 添加一个边框，这样在白色/透明背景下也能看到形状 */
-    border: 1px solid #ced4da; /* 浅灰色边框 - 可调整 */
+    /* 2. Add a border so the shape is visible on white/transparent background */
+    border: 1px solid #ced4da; /* Light gray border - adjustable */
   
     border-radius: 20px;
     gap: 8px;
     text-decoration: none;
-    color: #212529;      /* 默认文字颜色 */
+    color: #212529;      /* Default text color */
     font-size: 1rem;
   
-    /* 3. 添加过渡效果，让背景色和边框色变化更平滑 */
+    /* 3. Add transition effect for smooth background and border color changes */
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
   
-  /* 鼠标悬停时的样式 */
+  /* Mouse hover style */
   .info-badge:hover {
-    /* 4. 悬停时改变背景色 */
-    background-color: #e9ecef; /* 之前用的浅灰色 */
+    /* 4. Change background color on hover */
+    background-color: #e9ecef; /* Previously used light gray */
   
-    /* 5. (可选) 悬停时可以改变边框颜色，或者让边框和背景色一致 */
-    border-color: #e9ecef; /* 让边框融入背景 */
-    /* border-color: #adb5bd; */ /* 或者用一个稍深的颜色 */
+    /* 5. (Optional) Change border color on hover, or make border blend with background */
+    border-color: #e9ecef; /* Make border blend with background */
+    /* border-color: #adb5bd; */ /* Or use a slightly darker color */
   
-    /* 6. (可选) 悬停时可以改变文字颜色 */
+    /* 6. (Optional) Change text color on hover */
     /* color: #000; */
   
-    cursor: pointer; /* 7. (可选) 鼠标悬停时显示手型光标，提示可点击 */
+    cursor: pointer; /* 7. (Optional) Show hand cursor on hover to indicate clickability */
   }
   
-  /* 图标和文字样式通常保持不变 */
+  /* Icon and text styles typically remain unchanged */
   .badge-icon {
     height: 24px;
     width: auto;
@@ -776,34 +776,32 @@ animation: revealSubtitle 1s forwards;
   display: none !important;
 }
 
-/* 当没有图像时的处理 */
+/* When there's no image */
 .state-description:only-child {
   margin-top: 0;
 }
 
-/* 当没有推理或行动时的处理 */
+/* When there's no reasoning or action */
 .action-content:empty {
   padding: 1.5rem;
   text-align: center;
   color: #6b7280;
 }
 
-/* 状态描述中的代码块样式 */
+/* Code block styles in state description */
 .state-description .code-block {
-  background-color: #f3f4f6;
-  border-radius: 6px;
-  padding: 1rem;
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: monospace;
   font-size: 0.9rem;
-  line-height: 1.5;
-  color: #374151;
-  overflow-x: auto;
   white-space: pre-wrap;
-  border: 1px solid #e5e7eb;
-  margin: 0.8rem 0;
+  overflow-x: auto;
+  margin: 1rem 0;
 }
 
-/* 当状态描述中只有代码块时去掉上边距 */
+/* When state description only contains code block, remove top margin */
 .state-description > .code-block:first-child {
   margin-top: 0;
 }
@@ -812,26 +810,27 @@ animation: revealSubtitle 1s forwards;
   margin-bottom: 0;
 }
 
-/* 代码块语言标记 */
+/* Code block language tag */
 .code-language {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 0.2rem 0.5rem;
+  background-color: #e9ecef;
+  color: #495057;
   font-size: 0.75rem;
-  background-color: #e5e7eb;
-  color: #4b5563;
-  border-radius: 0 6px 0 6px;
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  padding: 2px 8px;
+  border-bottom-left-radius: 4px;
+  font-family: monospace;
+  user-select: none;
 }
 
-/* 确保代码块内的pre标签样式正确 */
+/* Ensure correct styles for pre tags in code blocks */
 .code-block {
   position: relative;
 }
 
 .code-block pre {
   margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
+  font-family: monospace;
+  font-size: 0.9em;
 }

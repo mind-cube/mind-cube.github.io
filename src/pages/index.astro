@@ -51,7 +51,7 @@ const pageTitle = "RAGEN - RL Agent";
           charSpan.className = 'reveal-char';
           charSpan.style.animationDelay = `${i * 0.1}s`;
           
-          // 特殊处理空格，确保它们能正确显示
+          // Special handling for spaces to ensure they display correctly
           if (titleText[i] === ' ') {
             charSpan.innerHTML = '&nbsp;';
           } else {
@@ -70,7 +70,7 @@ const pageTitle = "RAGEN - RL Agent";
           charSpan.className = 'reveal-char-subtitle';
           charSpan.style.animationDelay = `${i * 0.05 + 0.5}s`; // Start after title animation
           
-          // 特殊处理空格，确保它们能正确显示
+          // Special handling for spaces to ensure they display correctly
           if (subtitleText[i] === ' ') {
             charSpan.innerHTML = '&nbsp;';
           } else {

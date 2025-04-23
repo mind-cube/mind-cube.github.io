@@ -1,14 +1,223 @@
 ---
-// FindingsSection.astro - Displays the findings section
+// FindingsSection.astro - Displays the findings section with collapsible cards
 ---
 <section id="findings" class="content-section alt-background">
   <div class="section-container">
     <h2 class="section-title">Findings</h2>
-    <p class="section-description">Key findings and insights derived from the RAGEN project will be presented here. Placeholder for now.</p>
-    <ul class="findings-list">
-      <li>Finding placeholder 1...</li>
-      <li>Finding placeholder 2...</li>
-      <li>Finding placeholder 3...</li>
-    </ul>
+    <p class="section-description">Key findings from our research on LLM reasoning stability and reinforcement learning dynamics.</p>
+    
+    <div class="findings-components">
+      <div class="finding-card" id="finding-card-1">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 1: Multi-turn training introduces new instability patterns</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-1">
+          <p><strong>Single-turn RL methods</strong> like PPO and GRPO achieve early gains but often <strong>collapse in multi-turn tasks</strong>. While a critic (as in PPO) delays instability, it does not prevent reasoning degradation, highlighting the need for <strong>specialized stabilization</strong> in long-horizon settings.</p>
+        </div>
+      </div>
+      
+      <div class="finding-card" id="finding-card-2">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 2: Reasoning collapse is reflected as "Echo Trap" over training</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-2">
+          <p>We find that <strong>early-stage agents respond with diverse symbolic reasoning</strong>, but <strong>collapse into deterministic, repetitive templates</strong> after training. Models converge to fixed phrasing, indicating that RL may reinforce <strong>superficial patterns</strong> instead of general reasoning and forms an <strong>"Echo Trap"</strong> that hinders long-term generalization.</p>
+        </div>
+      </div>
+      
+      <div class="finding-card" id="finding-card-3">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 3: Collapse follows consistent dynamics and can be anticipated</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-3">
+          <p><strong>Reward standard deviation</strong> and <strong>entropy</strong> often fluctuate before performance degrades, while <strong>gradient norm</strong> spikes typically mark the point of irreversible collapse. These metrics provide early indicators and motivate the need for stabilization strategies.</p>
+        </div>
+      </div>
+      
+      <div class="finding-card" id="finding-card-4">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 4: Uncertainty-based filtering improves training stability and efficiency</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-4">
+          <p>Filtering training data based on <strong>reward variance</strong> effectively combats the "Echo Trap". Retaining only the <strong>highly-uncertain</strong> prompts delays or prevents collapse across tasks and improves data efficiency.</p>
+        </div>
+      </div>
+      
+      <div class="finding-card" id="finding-card-5">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 5: Rollout frequency, action budget, and task diversity affect data quality</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-5">
+          <p><strong>Up-to-date rollouts</strong> ensure optimization targets remain aligned with current policy behavior. <strong>Suitable action budgets</strong> provide enough planning space and avoid the noise introduced by overly long sequences. <strong>Diverse task instances</strong> enable better policy contrast and generalization across environments.</p>
+        </div>
+      </div>
+      
+      <div class="finding-card" id="finding-card-6">
+        <div class="finding-header">
+          <div class="finding-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"></path>
+              <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+          </div>
+          <h3 class="finding-title">Finding 6: Reward design is the key to emerging reasoning</h3>
+          <div class="expand-icon">+</div>
+        </div>
+        <div class="finding-content" id="finding-content-6">
+          <p><strong>Symbolic reasoning emerges naturally</strong> in single-turn tasks like Bandit, enabling generalization by connecting reward structures with semantic meaning. However, in <strong>multi-turn RL, reasoning gradually decays</strong> despite explicit prompting structures. This contrast highlights that <strong>sparse, delayed rewards are insufficient</strong> to sustain reasoning processes in complex settings, suggesting the need for <strong>targeted reinforcement of intermediate reasoning steps</strong> rather than relying solely on outcome-based feedback.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</section> 
+</section>
+
+<style>
+  .findings-components {
+    margin-bottom: 3rem;
+  }
+
+  .finding-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .finding-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+  }
+
+  .finding-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+  }
+
+  /* Different background colors for each finding card */
+  .finding-card:nth-child(1) .finding-header { background-color: #2a2f6c; }
+  .finding-card:nth-child(2) .finding-header { background-color: #4a3f9f; }
+  .finding-card:nth-child(3) .finding-header { background-color: #5e56b2; }
+  .finding-card:nth-child(4) .finding-header { background-color: #7165d8; }
+  .finding-card:nth-child(5) .finding-header { background-color: #9f7cd2; }
+  .finding-card:nth-child(6) .finding-header { background-color: #2a2f6c; }
+
+  .finding-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  .finding-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .expand-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    margin-left: 1rem;
+  }
+
+  .finding-content {
+    padding: 1.5rem;
+    display: none;
+    line-height: 1.7;
+  }
+
+  .finding-content p {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .finding-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Add highlighting for key terms */
+  .finding-content strong {
+    color: #4a3f9f;
+    background-color: rgba(74, 63, 159, 0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Set up event listeners for all finding cards
+    for (let i = 1; i <= 6; i++) {
+      const findingCard = document.getElementById(`finding-card-${i}`);
+      const findingContent = document.getElementById(`finding-content-${i}`);
+      
+      if (findingCard && findingContent) {
+        const expandIcon = findingCard.querySelector('.expand-icon') as HTMLElement | null;
+        
+        findingCard.addEventListener('click', (e: Event) => {
+          const target = e.target as HTMLElement;
+          if (target.closest && target.closest('.finding-content')) return;
+          
+          findingContent.classList.toggle('active');
+          if (expandIcon) {
+            if (findingContent.classList.contains('active')) {
+              expandIcon.textContent = '-';
+            } else {
+              expandIcon.textContent = '+';
+            }
+          }
+        });
+      }
+    }
+  });
+</script> 

@@ -22,20 +22,6 @@
       "description": "Agent navigating a frozen lake environment to reach a goal while avoiding holes",
       "dataFile": "/data/trajectories/qwen2.5-0.5b/frozen-lake.json",
       "thumbnail": "/data/thumbnails/frozen-lake.png"
-    },
-    {
-      "id": "alfworld",
-      "name": "ALFWorld Navigation",
-      "description": "Agent navigating in a virtual household environment to complete tasks",
-      "dataFile": "/data/trajectories/qwen2.5-0.5b/alfworld.json",
-      "thumbnail": "/data/thumbnails/alfworld.png"
-    },
-    {
-      "id": "webshop",
-      "name": "WebShop",
-      "description": "Agent shopping for items on an e-commerce website",
-      "dataFile": "/data/trajectories/qwen2.5-0.5b/webshop.json",
-      "thumbnail": "/data/thumbnails/webshop.png"
     }
   ]
 } 

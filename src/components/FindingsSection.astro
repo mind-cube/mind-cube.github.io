@@ -18,7 +18,7 @@
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-1">
-          <p><strong>Single-turn RL methods</strong> like PPO and GRPO achieve early gains but often <strong>collapse in multi-turn tasks</strong>. While a critic (as in PPO) delays instability, it does not prevent reasoning degradation, highlighting the need for <strong>specialized stabilization</strong> in long-horizon settings.</p>
+          <p> Adaptations from <strong>single-turn RL methods</strong> like PPO and GRPO achieve early gains in agent settings but often collapse. A critic in PPO may delay instability, but would not prevent reasoning degradation, highlighting the need for specialized stabilization in agent settings.</p>
         </div>
       </div>
       
@@ -32,7 +32,7 @@
               <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
           </div>
-          <h3 class="finding-title">Finding 2: Reasoning collapse is reflected as "Echo Trap" over training</h3>
+          <h3 class="finding-title">Finding 2: Model collapse in agent RL is reflected as "Echo Trap" over training</h3>
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-2">
@@ -47,7 +47,7 @@
               <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
             </svg>
           </div>
-          <h3 class="finding-title">Finding 3: Collapse follows consistent dynamics and can be anticipated</h3>
+          <h3 class="finding-title">Finding 3: Collapse follows similar dynamics and can be anticipated by indicators</h3>
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-3">
@@ -68,7 +68,7 @@
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-4">
-          <p>Filtering training data based on <strong>reward variance</strong> effectively combats the "Echo Trap". Retaining only the <strong>highly-uncertain</strong> prompts delays or prevents collapse across tasks and improves data efficiency.</p>
+          <p>Filtering training data based on <strong>reward variance</strong> effectively combats the "Echo Trap". Retaining only the <strong>highly-uncertain</strong> training instances delays or prevents collapse across tasks and improves data efficiency.</p>
         </div>
       </div>
       
@@ -80,11 +80,11 @@
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
           </div>
-          <h3 class="finding-title">Finding 5: Rollout frequency, action budget, and task diversity affect data quality</h3>
+          <h3 class="finding-title">Finding 5: Task diversity,  action budget, and rollout frequency affect data quality</h3>
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-5">
-          <p><strong>Up-to-date rollouts</strong> ensure optimization targets remain aligned with current policy behavior. <strong>Suitable action budgets</strong> provide enough planning space and avoid the noise introduced by overly long sequences. <strong>Diverse task instances</strong> enable better policy contrast and generalization across environments.</p>
+          <p><strong>Diverse task instances</strong> enable better policy contrast and generalization across environments. <strong>Suitable action budgets</strong> provide enough planning space and avoid the noise introduced by overly long sequences. <strong>Up-to-date rollouts</strong> ensure optimization targets remain aligned with current policy behavior.</p>
         </div>
       </div>
       
@@ -96,11 +96,11 @@
               <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
             </svg>
           </div>
-          <h3 class="finding-title">Finding 6: Reward design is the key to emerging reasoning</h3>
+          <h3 class="finding-title">Finding 6: Reasoning fails to emerge without meticulous reward design</h3>
           <div class="expand-icon">+</div>
         </div>
         <div class="finding-content" id="finding-content-6">
-          <p><strong>Symbolic reasoning emerges naturally</strong> in single-turn tasks like Bandit, enabling generalization by connecting reward structures with semantic meaning. However, in <strong>multi-turn RL, reasoning gradually decays</strong> despite explicit prompting structures. This contrast highlights that <strong>sparse, delayed rewards are insufficient</strong> to sustain reasoning processes in complex settings, suggesting the need for <strong>targeted reinforcement of intermediate reasoning steps</strong> rather than relying solely on outcome-based feedback.</p>
+          While <strong>Symbolic reasoning emerges naturally</strong> in single-turn tasks under weak supervision, it fails to persist in multi-turn environments without the reward design explicitly encouraging interpretable intermediate reasoning steps. We observe that even with structured prompts, reasoning gradually decays during training if the reward signal focuses only on final outcomes. This suggests that without meticulous reward shaping, agents may tend to collapse into shortcut behaviors that bypass reasoning altogether.
         </div>
       </div>
     </div>

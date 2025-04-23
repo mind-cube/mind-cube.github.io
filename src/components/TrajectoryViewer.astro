@@ -94,6 +94,7 @@
       </div>
       
       <!-- Trajectory Metrics -->
+      <!--
       <div class="metrics-container">
         <h3 class="display-subtitle">Trajectory Metrics</h3>
         <div class="metrics-grid">
@@ -115,6 +116,7 @@
           </div>
         </div>
       </div>
+      -->
     </div>
   </div>
 </section>
@@ -501,7 +503,7 @@
             stateTextElement.innerHTML = finalDescription;
           } else {
             // No code blocks, directly set text
-            stateTextElement.textContent = description;
+            stateTextElement.innerHTML = description.replace(/\n/g, '<br>');
           }
           stateTextElement.closest('.state-description')?.classList.remove('hidden');
         } else {

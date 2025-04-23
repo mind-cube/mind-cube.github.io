@@ -1,124 +1,96 @@
 {
-  "taskName": "Frozen Lake",
-  "taskDescription": "LLM agent navigating a frozen lake environment to reach a goal while avoiding holes",
+  "taskName": "FrozenLake",
+  "taskDescription": "LLM agent solving the FrozenLake puzzle by avoiding holes and reaching the goal under stochastic dynamics",
   "trajectories": {
     "traj1": {
-      "name": "Complete Trajectory",
-      "description": "Full trajectory with all fields (image, description, reasoning, action)",
-      "totalSteps": 2,
-      "success": true,
-      "validActionRate": "100%",
-      "effectiveActionRate": "100%",
-      "steps": [
-        {
-          "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj1/step1.png",
-            "description": "Initial state of the frozen lake. Agent (A) starts at the top-left. Goal (G) is at bottom-right. Holes (H) are scattered across the lake."
-          },
-          "reasoning": "I need to navigate from the starting point to the goal while avoiding falling into holes. I should start by moving right, as moving down immediately looks dangerous.",
-          "action": "move('right')"
-        },
-        {
-          "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj1/step2.png",
-            "description": "Agent has moved right onto safe ice. There's a hole below."
-          },
-          "reasoning": "I can see there's a hole directly below me. I should continue moving right to stay on the safe path.",
-          "action": "move('right')"
-        }
-      ]
-    },
-    "traj2": {
-      "name": "No Images",
-      "description": "Trajectory without images, only text descriptions",
-      "totalSteps": 2,
+      "name": "Spinning on Ice",
+      "description": "Agent keeps attempting Right || Up but fails to reach the goal after 5 turns",
+      "totalSteps": 5,
       "success": false,
-      "validActionRate": "50%",
+      "validActionRate": "100%",
       "effectiveActionRate": "0%",
       "steps": [
         {
           "state": {
-            "description": "Agent is at position (0,0) on a 4x4 grid. The goal is at (3,3). There are holes at positions (1,1), (2,1), (3,1), and (1,3)."
+            "description": "___G\nO___\n____\n_P__"
           },
-          "reasoning": "I need to reach the goal while avoiding holes. From my starting position, I can move either right or down. Moving down is risky due to the hole at (1,1), so I'll move right.",
-          "action": "move('right')"
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
         },
         {
           "state": {
-            "description": "Agent is now at position (0,1). There's a hole directly below at (1,1)."
+            "description": "___G\nOP__\n____\n____"
           },
-          "reasoning": "I need to avoid the hole below me. Moving right again seems to be the safest option.",
-          "action": "move('down')"
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
+        },
+        {
+          "state": {
+            "description": "P__G\nO___\n____\n____"
+          },
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
+        },
+        {
+          "state": {
+            "description": "_P_G\nO___\n____\n____"
+          },
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
+        },
+        {
+          "state": {
+            "description": "___G\nO_P_\n____\n____"
+          },
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
         }
       ]
     },
-    "traj3": {
-      "name": "No Reasoning",
-      "description": "Trajectory without reasoning field, only states and actions",
-      "totalSteps": 2,
-      "success": true,
+    "traj2": {
+      "name": "Trapped at Bottom",
+      "description": "Agent repeats Right || Down but never progresses due to constant reward and slippery behavior",
+      "totalSteps": 5,
+      "success": false,
       "validActionRate": "100%",
-      "effectiveActionRate": "100%",
+      "effectiveActionRate": "0%",
       "steps": [
         {
           "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj3/step1.png",
-            "description": "The agent is at the start position (S). The goal (G) is visible in the distance. Several holes (H) are scattered throughout the frozen lake."
+            "description": "__O_\n__O_\n___G\nP__O"
           },
-          "action": "move('right')"
+          "reasoning": "Forbid the slippery ice and try to the target.",
+          "action": "Right || Up"
         },
         {
           "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj3/step2.png",
-            "description": "Agent has moved one step to the right, avoiding the nearby hole."
+            "description": "__O_\n__O_\n___G\nP__O"
           },
-          "action": "move('down')"
-        }
-      ]
-    },
-    "traj4": {
-      "name": "No Actions",
-      "description": "Trajectory without action field, only states and reasoning",
-      "totalSteps": 2,
-      "success": true,
-      "validActionRate": "N/A",
-      "effectiveActionRate": "N/A",
-      "steps": [
-        {
-          "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj4/step1.png",
-            "description": "The agent stands at the edge of a frozen lake with several visible holes."
-          },
-          "reasoning": "I need to carefully analyze the lake surface to identify safe paths. Based on what I can see, the right path appears to be solid and safe."
+          "reasoning": "Max reward of 0.0.",
+          "action": "Right || Down"
         },
         {
           "state": {
-            "image": "/data/trajectories/qwen2.5-0.5b/frozen-lake/traj4/step2.png", 
-            "description": "The agent has moved to the right and now has a better view of potential paths forward."
+            "description": "__O_\n__O_\n___G\nP__O"
           },
-          "reasoning": "From this position, I can see that the path down is free of holes for at least two steps. Moving down seems like the best option."
-        }
-      ]
-    },
-    "traj5": {
-      "name": "Description Only",
-      "description": "Trajectory with only state descriptions, no images, reasoning, or actions",
-      "totalSteps": 2,
-      "success": true,
-      "validActionRate": "N/A",
-      "effectiveActionRate": "N/A",
-      "steps": [
-        {
-          "state": {
-            "description": "The agent begins on the edge of the frozen lake, surveying the icy surface for a safe path to the goal."
-          }
+          "reasoning": "Constant reward environment.",
+          "action": "Right || Down"
         },
         {
           "state": {
-            "description": "Having identified a safe route, the agent carefully makes their way across the lake, avoiding thin ice and successfully reaching the goal on the other side."
-          }
+            "description": "__O_\n__O_\n___G\n_P_O"
+          },
+          "reasoning": "Keep trying, haven't won yet.",
+          "action": "Right || Down"
+        },
+        {
+          "state": {
+            "description": "__O_\n__O_\n__PG\n___O"
+          },
+          "reasoning": "Don't give up, reward is steady.",
+          "action": "Right || Down"
         }
       ]
     }
   }
-} 
+}

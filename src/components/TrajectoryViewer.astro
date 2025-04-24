@@ -243,11 +243,18 @@
             const option = document.createElement('option');
             option.value = task.id;
             option.textContent = task.name;
+            // Set FrozenLake as default selected
+            if (task.id === 'frozen-lake') {
+              option.selected = true;
+            }
             taskSelect.appendChild(option);
           });
           
-          // Load the first task by default
-          if (availableTasks.length > 0) {
+          // Load FrozenLake by default if available, otherwise load first task
+          const frozenLakeTask = availableTasks.find(task => task.id === 'frozen-lake');
+          if (frozenLakeTask) {
+            await loadTaskData('frozen-lake');
+          } else if (availableTasks.length > 0) {
             await loadTaskData(availableTasks[0].id);
           } else {
             showErrorMessage("No tasks available for the selected model.");

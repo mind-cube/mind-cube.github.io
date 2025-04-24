@@ -114,9 +114,9 @@ const mathFormulas = {
       <div class="component-card mdp-card" id="mdp-card">
         <div class="component-header">
           <h3 class="component-title">MDP Formulation</h3>
-          <div class="expand-icon">+</div>
+          <div class="expand-icon">-</div>
         </div>
-        <div class="component-content" id="mdp-content">
+        <div class="component-content active" id="mdp-content">
           <p>We formulate agent-environment interactions as Markov Decision Processes (MDPs) where states and actions are token sequences, allowing LLMs to reason over environment dynamics.</p>
           
           <div class="interactive-mdp-viz">
@@ -148,9 +148,9 @@ const mathFormulas = {
       <div class="component-card starpo-card" id="starpo-card">
         <div class="component-header">
           <h3 class="component-title">StarPO: Reinforcing Reasoning via Trajectory-Level Optimization</h3>
-          <div class="expand-icon">+</div>
+          <div class="expand-icon">-</div>
         </div>
-        <div class="component-content" id="starpo-content">
+        <div class="component-content active" id="starpo-content">
           <p>StarPO is a general RL framework for optimizing entire multi-turn interaction trajectories for LLM agents. The algorithm alternates between two phases:</p>
           
           <div class="starpo-phases">
@@ -780,18 +780,18 @@ const mathFormulas = {
 
     // Modify initialization display: keep both cards collapsed
     if (mdpContent && mdpCard) {
-      mdpContent.classList.remove('active');
+      mdpContent.classList.add('active');
       const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;
       if (mdpExpandIcon) {
-        mdpExpandIcon.textContent = '+';
+        mdpExpandIcon.textContent = '-';
       }
     }
     
     if (starpoContent && starpoCard) {
-      starpoContent.classList.remove('active');
+      starpoContent.classList.add('active');
       const starpoExpandIcon = starpoCard.querySelector('.expand-icon') as HTMLElement | null;
       if (starpoExpandIcon) {
-        starpoExpandIcon.textContent = '+';
+        starpoExpandIcon.textContent = '-';
       }
     }
 

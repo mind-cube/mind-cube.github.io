@@ -3,6 +3,7 @@
 ---
 <section id="data" class="content-section">
   <div class="section-container">
+    <div class="ragen-logo">RAGEN</div>
     <h2 class="section-title">RAGEN Trajectory Examples</h2>
     <p class="section-description">Explore agent trajectories across different tasks. View state transitions, LLM-generated actions, and the decision-making process.</p>
     
@@ -120,6 +121,24 @@
     </div>
   </div>
 </section>
+
+<style>
+  /* Add this at the end of the file, before the script tag */
+  .ragen-logo {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .section-container {
+    position: relative;
+    /* ... existing styles ... */
+  }
+</style>
 
 <script>
   // This script will be client-side JavaScript for the TrajectoryViewer functionality

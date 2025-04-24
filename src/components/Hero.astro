@@ -128,54 +128,48 @@
 </section> 
 
 <script>
-  // Reuse the same format function as header
+  // Format numbers to show 'k' for thousands
   function formatNumber(num) {
     return num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
   }
 
-  // Update stats display only if the new numbers are different from defaults
-  function updateStats(stars, forks) {
-    const starsElement = document.getElementById('hero-stars-count');
-    const forksElement = document.getElementById('hero-forks-count');
-    
-    if (starsElement && stars !== undefined) {
-      const formattedStars = formatNumber(stars);
-      if (formattedStars !== '1.4k') {
-        starsElement.textContent = formattedStars;
+  // Fetch GitHub stats directly
+  async function fetchGitHubStats() {
+    try {
+      // Try to use default numbers immediately
+      const starsElement = document.getElementById('hero-stars-count');
+      const forksElement = document.getElementById('hero-forks-count');
+      
+      // Fetch latest stats from GitHub
+      const response = await fetch('https://api.github.com/repos/RAGEN-AI/RAGEN');
+      const data = await response.json();
+      
+      const stars = data.stargazers_count;
+      const forks = data.forks_count;
+      
+      // Update stars count if available and different from default
+      if (starsElement && stars !== undefined) {
+        const formattedStars = formatNumber(stars);
+        if (formattedStars !== '1.4k') {
+          starsElement.textContent = formattedStars;
+        }
       }
-    }
-    
-    if (forksElement && forks !== undefined) {
-      const formattedForks = formatNumber(forks);
-      if (formattedForks !== '100+') {
-        forksElement.textContent = formattedForks;
+      
+      // Update forks count if available and different from default
+      if (forksElement && forks !== undefined) {
+        const formattedForks = formatNumber(forks);
+        if (formattedForks !== '105') {
+          forksElement.textContent = formattedForks;
+        }
       }
+    } catch (error) {
+      console.error('Error fetching GitHub stats:', error);
+      // Keep default values on error
     }
   }
 
-  // Listen for GitHub stats from Header component
-  document.addEventListener('github-stats-updated', (event) => {
-    const { stars, forks } = event.detail;
-    updateStats(stars, forks);
-  });
-
-  // Also check if stats are already available in header
-  document.addEventListener('DOMContentLoaded', () => {
-    const headerStars = document.querySelector('header #stars-count');
-    const headerForks = document.querySelector('header #forks-count');
-    
-    if (headerStars && headerForks && 
-        headerStars.textContent !== '-' && 
-        headerForks.textContent !== '-') {
-      const stars = headerStars.textContent.endsWith('k') ? 
-        parseFloat(headerStars.textContent) * 1000 : 
-        parseInt(headerStars.textContent);
-      const forks = headerForks.textContent.endsWith('k') ? 
-        parseFloat(headerForks.textContent) * 1000 : 
-        parseInt(headerForks.textContent);
-      updateStats(stars, forks);
-    }
-  });
+  // Run when page is loaded
+  document.addEventListener('DOMContentLoaded', fetchGitHubStats);
 </script> 
 
 <style>

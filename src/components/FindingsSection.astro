@@ -202,10 +202,10 @@
       const findingContent = document.getElementById(`finding-content-${i}`);
       
       if (findingCard && findingContent) {
-        const expandIcon = findingCard.querySelector('.expand-icon');
+        const expandIcon = findingCard.querySelector('.expand-icon') as HTMLElement | null;
         
-        findingCard.addEventListener('click', (e) => {
-          const target = e.target;
+        findingCard.addEventListener('click', (e: Event) => {
+          const target = e.target as HTMLElement;
           if (target.closest && target.closest('.finding-content')) return;
           
           findingContent.classList.toggle('active');

@@ -124,14 +124,57 @@
 <script>
   // This script will be client-side JavaScript for the TrajectoryViewer functionality
   document.addEventListener('DOMContentLoaded', () => {
+    // Type definitions for trajectory data
+    interface State {
+      image?: string;
+      description: string;
+    }
+    
+    interface Step {
+      state: State;
+      reasoning?: string;
+      action?: string;
+    }
+    
+    interface Trajectory {
+      name: string;
+      description: string;
+      totalSteps: number;
+      success: boolean;
+      validActionRate: string;
+      effectiveActionRate: string;
+      steps: Step[];
+    }
+    
+    interface TaskData {
+      taskName: string;
+      taskDescription: string;
+      trajectories: Record<string, Trajectory>;
+    }
+    
+    interface Task {
+      id: string;
+      name: string;
+      description: string;
+      dataFile: string;
+      thumbnail: string;
+    }
+    
+    interface TaskIndex {
+      version: string;
+      lastUpdated: string;
+      tasks: Task[];
+    }
+    
+    // Trajectory viewer functionality
     // Element references
-    const modelSelect = document.getElementById('model-select');
-    const taskSelect = document.getElementById('task-select');
-    const trajectorySelect = document.getElementById('trajectory-select');
+    const modelSelect = document.getElementById('model-select') as HTMLSelectElement;
+    const taskSelect = document.getElementById('task-select') as HTMLSelectElement;
+    const trajectorySelect = document.getElementById('trajectory-select') as HTMLSelectElement;
     const timelineStepsContainer = document.getElementById('timeline-steps');
     const currentStepElement = document.getElementById('current-step');
     const totalStepsElement = document.getElementById('total-steps');
-    const stateImageElement = document.getElementById('state-image');
+    const stateImageElement = document.getElementById('state-image') as HTMLImageElement;
     const stateTextElement = document.getElementById('state-text');
     const reasoningTextElement = document.getElementById('reasoning-text');
     const actionTextElement = document.getElementById('action-text');
@@ -139,22 +182,22 @@
     const totalStepsValueElement = document.getElementById('total-steps-value');
     const validActionRateElement = document.getElementById('valid-action-rate');
     const effectiveActionRateElement = document.getElementById('effective-action-rate');
-    const prevStepButton = document.getElementById('prev-step');
-    const nextStepButton = document.getElementById('next-step');
-    const playPauseButton = document.getElementById('play-pause');
+    const prevStepButton = document.getElementById('prev-step') as HTMLButtonElement;
+    const nextStepButton = document.getElementById('next-step') as HTMLButtonElement;
+    const playPauseButton = document.getElementById('play-pause') as HTMLButtonElement;
     
     // State variables
     let currentModel = 'qwen2.5-0.5b';
-    let availableTasks = [];
-    let taskData = {};
+    let availableTasks: Task[] = [];
+    let taskData: Record<string, TaskData> = {};
     let currentTaskId = '';
     let currentTrajectoryId = '';
     let currentStepIndex = 0;
     let isPlaying = false;
-    let playInterval = null;
+    let playInterval: number | null = null;
     
     // Display error message
-    function showErrorMessage(message) {
+    function showErrorMessage(message: string) {
       if (timelineStepsContainer) {
         timelineStepsContainer.innerHTML = `<div class="error-message">${message}</div>`;
       }
@@ -172,66 +215,110 @@
       }
     }
     
-    // Load task index with updated path structure
+    // Load the task index from the appropriate model folder
     async function loadTaskIndex() {
       try {
         showLoading();
-        const response = await fetch(`/data/${currentModel}/task_index.json`);
+        
+        // Add timestamp or random number to prevent caching
+        const timestamp = new Date().getTime();
+        const indexUrl = `/data/trajectories/${currentModel}/index.json?t=${timestamp}`;
+        console.log("Loading task index from:", indexUrl);
+        
+        const response = await fetch(indexUrl, { 
+          cache: 'no-store' // Force not to use cache
+        });
         if (!response.ok) {
           throw new Error(`Failed to load task index: ${response.status} ${response.statusText}`);
         }
         
-        const data = await response.json();
+        const data = await response.json() as TaskIndex;
         console.log("Available tasks:", data.tasks);
         availableTasks = data.tasks;
         
-        // Update task selection dropdown
+        // Populate task select dropdown
         if (taskSelect) {
-          taskSelect.innerHTML = availableTasks.map(task => 
-            `<option value="${task.id}">${task.name}</option>`
-          ).join('');
+          taskSelect.innerHTML = '';
+          availableTasks.forEach(task => {
+            const option = document.createElement('option');
+            option.value = task.id;
+            option.textContent = task.name;
+            taskSelect.appendChild(option);
+          });
           
-          // Load first task's data
+          // Load the first task by default
           if (availableTasks.length > 0) {
             await loadTaskData(availableTasks[0].id);
+          } else {
+            showErrorMessage("No tasks available for the selected model.");
           }
         }
       } catch (error) {
-        console.error("Error loading task index:", error);
-        showErrorMessage(`Failed to load tasks: ${error.message}`);
+        console.error('Error loading task index:', error);
+        showErrorMessage(`Failed to load tasks: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     }
     
     // Load task data with updated path structure
-    async function loadTaskData(taskId) {
+    async function loadTaskData(taskId: string) {
       try {
         showLoading();
-        const response = await fetch(`/data/${currentModel}/${taskId}/data.json`);
+        console.log("Loading task data for ID:", taskId);
+        
+        // Find the task info
+        const taskInfo = availableTasks.find(task => task.id === taskId);
+        if (!taskInfo) {
+          throw new Error(`Task with ID ${taskId} not found`);
+        }
+        
+        // Ensure using the correct model path
+        let dataPath = taskInfo.dataFile;
+        // Ensure the path includes model name
+        if (!dataPath.includes(`/data/trajectories/${currentModel}/`)) {
+          // Completely replace dataPath with the correct path
+          const fileName = dataPath.split('/').pop(); // Get the file name
+          dataPath = `/data/trajectories/${currentModel}/${fileName}`;
+        }
+        
+        // Add timestamp to avoid caching
+        const timestamp = new Date().getTime();
+        dataPath = `${dataPath}?t=${timestamp}`;
+        
+        console.log("Loading data from path:", dataPath);
+        const response = await fetch(dataPath, {
+          cache: 'no-store' // Force not to use cache
+        });
         if (!response.ok) {
           throw new Error(`Failed to load task data: ${response.status} ${response.statusText}`);
         }
         
-        const data = await response.json();
+        const data = await response.json() as TaskData;
         console.log("Task data loaded:", data.taskName, "with", Object.keys(data.trajectories).length, "trajectories");
         taskData[taskId] = data;
         currentTaskId = taskId;
         
-        // Update trajectory selection dropdown
+        // Populate trajectory select dropdown
         if (trajectorySelect) {
-          const trajectories = Object.entries(data.trajectories);
-          trajectorySelect.innerHTML = trajectories.map(([id, traj]) => 
-            `<option value="${id}">${traj.name}</option>`
-          ).join('');
+          trajectorySelect.innerHTML = '';
           
-          // Initialize with first trajectory
-          if (trajectories.length > 0) {
-            currentTrajectoryId = trajectories[0][0];
+          Object.entries(data.trajectories).forEach(([id, trajectory]) => {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = trajectory.name || id;
+            trajectorySelect.appendChild(option);
+          });
+          
+          // Load the first trajectory by default
+          if (trajectorySelect.options.length > 0) {
+            currentTrajectoryId = trajectorySelect.options[0].value;
             initializeTimeline();
+          } else {
+            showErrorMessage(`No trajectories available for task: ${data.taskName}`);
           }
         }
       } catch (error) {
-        console.error("Error loading task data:", error);
-        showErrorMessage(`Failed to load task data: ${error.message}`);
+        console.error(`Error loading task data for ${taskId}:`, error);
+        showErrorMessage(`Failed to load data for ${taskId}: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     }
     
@@ -311,7 +398,7 @@
     }
     
     // Navigate to a specific step
-    function navigateToStep(stepIndex) {
+    function navigateToStep(stepIndex: number) {
       if (!currentTaskId || !currentTrajectoryId) return;
       
       const currentTask = taskData[currentTaskId];
@@ -335,7 +422,7 @@
       // Update timeline UI
       if (timelineStepsContainer) {
         const steps = timelineStepsContainer.querySelectorAll('.timeline-step');
-        const progressBar = timelineStepsContainer.querySelector('.timeline-progress');
+        const progressBar = timelineStepsContainer.querySelector('.timeline-progress') as HTMLElement;
         
         steps.forEach((stepEl, index) => {
           if (index < stepIndex) {
@@ -367,7 +454,7 @@
         const imageContainer = stateImageElement.closest('.state-image');
         if (imageContainer) {
           if (imagePath) {
-            imageContainer.style.display = 'block';
+            (imageContainer as HTMLElement).style.display = 'block';
             console.log("Loading image from:", imagePath);
             
             // Method to prevent cyclic loading errors
@@ -387,7 +474,7 @@
             }
           } else {
             // If no image path, hide the image container
-            imageContainer.style.display = 'none';
+            (imageContainer as HTMLElement).style.display = 'none';
           }
         }
       }
@@ -418,12 +505,10 @@
             // No code blocks, directly set text
             stateTextElement.innerHTML = description.replace(/\n/g, '<br>');
           }
-          const stateDescription = stateTextElement.closest('.state-description');
-          if (stateDescription) stateDescription.classList.remove('hidden');
+          stateTextElement.closest('.state-description')?.classList.remove('hidden');
         } else {
           stateTextElement.textContent = 'No description available.';
-          const stateDescription = stateTextElement.closest('.state-description');
-          if (stateDescription) stateDescription.classList.add('hidden');
+          stateTextElement.closest('.state-description')?.classList.add('hidden');
         }
       }
       
@@ -434,10 +519,10 @@
         
         if (reasoning) {
           reasoningTextElement.innerHTML = `<p>${reasoning}</p>`;
-          if (reasoningContainer) reasoningContainer.style.display = 'block';
+          if (reasoningContainer) (reasoningContainer as HTMLElement).style.display = 'block';
         } else {
           reasoningTextElement.innerHTML = '<p>No reasoning available.</p>';
-          if (reasoningContainer) reasoningContainer.style.display = 'none';
+          if (reasoningContainer) (reasoningContainer as HTMLElement).style.display = 'none';
         }
       }
       
@@ -448,10 +533,10 @@
         
         if (action) {
           actionTextElement.textContent = action;
-          if (actionContainer) actionContainer.style.display = 'block';
+          if (actionContainer) (actionContainer as HTMLElement).style.display = 'block';
         } else {
           actionTextElement.textContent = 'No action available.';
-          if (actionContainer) actionContainer.style.display = 'none';
+          if (actionContainer) (actionContainer as HTMLElement).style.display = 'none';
         }
       }
       
@@ -476,8 +561,8 @@
           playInterval = null;
         }
         
-        const playIcon = playPauseButton?.querySelector('.play-icon');
-        const pauseIcon = playPauseButton?.querySelector('.pause-icon');
+        const playIcon = playPauseButton?.querySelector('.play-icon') as HTMLElement;
+        const pauseIcon = playPauseButton?.querySelector('.pause-icon') as HTMLElement;
         
         if (playIcon) playIcon.style.display = 'block';
         if (pauseIcon) pauseIcon.style.display = 'none';
@@ -493,18 +578,18 @@
               playInterval = null;
             }
             
-            const playIcon = playPauseButton?.querySelector('.play-icon');
-            const pauseIcon = playPauseButton?.querySelector('.pause-icon');
+            const playIcon = playPauseButton?.querySelector('.play-icon') as HTMLElement;
+            const pauseIcon = playPauseButton?.querySelector('.pause-icon') as HTMLElement;
             
             if (playIcon) playIcon.style.display = 'block';
             if (pauseIcon) pauseIcon.style.display = 'none';
             
             isPlaying = false;
           }
-        }, 2000);
+        }, 2000); // Advance every 2 seconds
         
-        const playIcon = playPauseButton?.querySelector('.play-icon');
-        const pauseIcon = playPauseButton?.querySelector('.pause-icon');
+        const playIcon = playPauseButton?.querySelector('.play-icon') as HTMLElement;
+        const pauseIcon = playPauseButton?.querySelector('.pause-icon') as HTMLElement;
         
         if (playIcon) playIcon.style.display = 'none';
         if (pauseIcon) pauseIcon.style.display = 'block';
@@ -514,7 +599,7 @@
     }
     
     // Update metrics display with new metrics
-    function updateMetricsDisplay(trajectory) {
+    function updateMetricsDisplay(trajectory: Trajectory) {
       console.log("Updating metrics display:", {
         totalSteps: trajectory.totalSteps,
         success: trajectory.success,
@@ -570,20 +655,23 @@
       
       if (modelSelect) {
         modelSelect.addEventListener('change', async (e) => {
-          currentModel = e.target.value;
+          const target = e.target as HTMLSelectElement;
+          currentModel = target.value;
           await loadTaskIndex(); // Reload tasks for the selected model
         });
       }
       
       if (taskSelect) {
         taskSelect.addEventListener('change', async (e) => {
-          await loadTaskData(e.target.value);
+          const target = e.target as HTMLSelectElement;
+          await loadTaskData(target.value);
         });
       }
       
       if (trajectorySelect) {
         trajectorySelect.addEventListener('change', (e) => {
-          currentTrajectoryId = e.target.value;
+          const target = e.target as HTMLSelectElement;
+          currentTrajectoryId = target.value;
           initializeTimeline();
         });
       }

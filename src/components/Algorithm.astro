@@ -1,5 +1,6 @@
 ---
 // Algorithm.astro - Displays information about the StarPO algorithm framework
+import { Fragment } from 'astro/jsx-runtime'
 
 // Predefined math formula variables
 const mathFormulas = {
@@ -12,6 +13,8 @@ const mathFormulas = {
   ppoFormula: "\\[L(\\theta) = \\mathbb{E}[\\min(r_t(\\theta)A^\\pi, \\text{clip}(r_t(\\theta), 1-\\varepsilon, 1+\\varepsilon)A^\\pi)]\\]",
   grpoFormula: "\\[L(\\theta) = \\mathbb{E}[R(\\tau) \\cdot \\log \\pi_\\theta(\\tau)]\\]"
 }
+
+// @ts-ignore
 ---
 <section id="starpo" class="content-section alt-background"> 
   <div class="section-container">
@@ -740,10 +743,10 @@ const mathFormulas = {
     const starpoContent = document.getElementById('starpo-content');
 
     if (mdpCard && mdpContent) {
-      const mdpExpandIcon = mdpCard.querySelector('.expand-icon');
+      const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;
       
-      mdpCard.addEventListener('click', (e) => {
-        const target = e.target;
+      mdpCard.addEventListener('click', (e: Event) => {
+        const target = e.target as HTMLElement;
         if (target.closest && target.closest('.component-content')) return;
         
         mdpContent.classList.toggle('active');
@@ -758,10 +761,10 @@ const mathFormulas = {
     }
 
     if (starpoCard && starpoContent) {
-      const starpoExpandIcon = starpoCard.querySelector('.expand-icon');
+      const starpoExpandIcon = starpoCard.querySelector('.expand-icon') as HTMLElement | null;
       
-      starpoCard.addEventListener('click', (e) => {
-        const target = e.target;
+      starpoCard.addEventListener('click', (e: Event) => {
+        const target = e.target as HTMLElement;
         if (target.closest && target.closest('.component-content')) return;
         
         starpoContent.classList.toggle('active');
@@ -778,7 +781,7 @@ const mathFormulas = {
     // Modify initialization display: keep both cards collapsed
     if (mdpContent && mdpCard) {
       mdpContent.classList.remove('active');
-      const mdpExpandIcon = mdpCard.querySelector('.expand-icon');
+      const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;
       if (mdpExpandIcon) {
         mdpExpandIcon.textContent = '+';
       }
@@ -786,7 +789,7 @@ const mathFormulas = {
     
     if (starpoContent && starpoCard) {
       starpoContent.classList.remove('active');
-      const starpoExpandIcon = starpoCard.querySelector('.expand-icon');
+      const starpoExpandIcon = starpoCard.querySelector('.expand-icon') as HTMLElement | null;
       if (starpoExpandIcon) {
         starpoExpandIcon.textContent = '+';
       }
@@ -816,9 +819,9 @@ const mathFormulas = {
 
     // Rollout animation
     const replayRollout = document.getElementById('replay-rollout');
-    const agentThinking = document.getElementById('agent-thinking');
-    const agentAction = document.getElementById('agent-action');
-    const envFeedback = document.getElementById('env-feedback');
+    const agentThinking = document.getElementById('agent-thinking') as HTMLElement | null;
+    const agentAction = document.getElementById('agent-action') as HTMLElement | null;
+    const envFeedback = document.getElementById('env-feedback') as HTMLElement | null;
 
     function animateRollout() {
       // Reset

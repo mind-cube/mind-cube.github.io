@@ -76,7 +76,7 @@
         </div>
         
         <div class="action-container">
-          <h3 class="display-subtitle">LLM Action</h3>
+          <h3 class="display-subtitle">LLM Response</h3>
           <div class="action-content">
             <div class="llm-reasoning">
               <h4>Reasoning:</h4>
@@ -262,17 +262,17 @@
             const option = document.createElement('option');
             option.value = task.id;
             option.textContent = task.name;
-            // Set FrozenLake as default selected
-            if (task.id === 'frozen-lake') {
+            // Set Sokoban as default selected
+            if (task.id === 'sokoban') {
               option.selected = true;
             }
             taskSelect.appendChild(option);
           });
           
-          // Load FrozenLake by default if available, otherwise load first task
-          const frozenLakeTask = availableTasks.find(task => task.id === 'frozen-lake');
-          if (frozenLakeTask) {
-            await loadTaskData('frozen-lake');
+          // Load Sokoban by default if available, otherwise load first task
+          const sokobanTask = availableTasks.find(task => task.id === 'sokoban');
+          if (sokobanTask) {
+            await loadTaskData('sokoban');
           } else if (availableTasks.length > 0) {
             await loadTaskData(availableTasks[0].id);
           } else {

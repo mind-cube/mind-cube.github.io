@@ -10,8 +10,8 @@ const mathFormulas = {
   transitionFunction: "\\(P(s_{t+1} | s_t, a_t)\\)",
   policy: "\\(\\pi(a_t | s_t)\\)",
   expectedRewards: "\\(\\mathbb{E}_\\pi[\\sum_t \\gamma^t r_t]\\)",
-  ppoFormula: "\\[L(\\theta) = \\mathbb{E}[\\min(r_t(\\theta)A^\\pi, \\text{clip}(r_t(\\theta), 1-\\varepsilon, 1+\\varepsilon)A^\\pi)]\\]",
-  grpoFormula: "\\[L(\\theta) = \\mathbb{E}[R(\\tau) \\cdot \\log \\pi_\\theta(\\tau)]\\]"
+  ppoFormula: "\\[J_{\\text{PPO}}(\\theta) = \\frac{1}{G} \\sum_{i=1}^G \\frac{1}{|\\tau_i|} \\sum_{t=1}^{|\\tau_i|} \\min \\left( \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)} A_{i,t}, \\text{clip}\\left(\\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)}, 1-\\epsilon, 1+\\epsilon\\right) A_{i,t} \\right)\\]",
+  grpoFormula: "\\[\\hat{A}_{i,t} = \\frac{R(\\tau_i) - \\text{mean}(\\{R(\\tau_1), \\ldots, R(\\tau_G)\\})}{\\text{std}(\\{R(\\tau_1), \\ldots, R(\\tau_G)\\})}\\] \\[J_{\\text{GRPO}}(\\theta) = \\frac{1}{G} \\sum_{i=1}^G \\frac{1}{|\\tau_i|} \\sum_{t=1}^{|\\tau_i|} \\min \\left( \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)} \\hat{A}_{i,t}, \\text{clip}\\left(\\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)}, 1-\\epsilon, 1+\\epsilon\\right) \\hat{A}_{i,t} \\right)\\]"
 }
 
 // @ts-ignore

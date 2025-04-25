@@ -12,42 +12,42 @@
       "steps": [
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n___G\nO___\n____\n_P__\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n___G\nO___\n____\n_P__\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n___G\nOP__\n____\n____\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n___G\nOP__\n____\n____\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\nP__G\nO___\n____\n____\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\nP__G\nO___\n____\n____\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n_P_G\nO___\n____\n____\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n_P_G\nO___\n____\n____\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n___G\nO_P_\n____\n____\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n___G\nO_P_\n____\n____\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n___P\nO___\n____\n____\n```\nEnd of trajectory"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n___P\nO___\n____\n____\n```\nEnd of trajectory"
           }
         }
       ]
@@ -62,42 +62,42 @@
       "steps": [
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
           },
           "reasoning": "Forbid the slippery ice and try to the target.",
           "action": "Right, Up"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
           },
           "reasoning": "Max reward of 0.0.",
           "action": "Right, Down"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\nP__O\n```"
           },
           "reasoning": "Constant reward environment.",
           "action": "Right, Down"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\n_P_O\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___G\n_P_O\n```"
           },
           "reasoning": "Keep trying, haven't won yet.",
           "action": "Right, Down"
         },
         {
           "state": {
-            "description": "P: Player, _L:Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n__PG\n___O\n```"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n__PG\n___O\n```"
           },
           "reasoning": "Don't give up, reward is steady.",
           "action": "Right, Down"
         },
         {
           "state": {
-            "description": "```\n__O_\n__O_\n__PG\n___O\n```\nEnd of trajectory"
+            "description": "P: Player, _L: Blank Space, G: Goal, O: Hole\n```\n__O_\n__O_\n___P\n___O\n```\nEnd of trajectory"
           }
         }
       ]

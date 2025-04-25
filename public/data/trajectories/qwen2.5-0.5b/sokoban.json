@@ -26,7 +26,7 @@
         },
         {
           "state": {
-            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#_P__#\n#_XO_#\n###__#\n######\n######\n```\nEnd of trajectory"
+            "description": "P: Player, _: Blank Space, #: Wall, √: Box on Target\n```\n######\n#____#\n#_P√_#\n###__#\n######\n######\n```\nEnd of trajectory"
           }
         }
       ]
@@ -55,7 +55,7 @@
         },
         {
           "state": {
-            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#____#\n#_OXP#\n######\n######\n######\n```\nEnd of trajectory"
+            "description": "P: Player, _: Blank Space, #: Wall, √: Box on Target\n```\n######\n#____#\n#_√P_#\n######\n######\n######\n```\nEnd of trajectory"
           }
         }
       ]

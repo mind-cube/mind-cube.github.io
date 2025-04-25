@@ -12,17 +12,22 @@
       "steps": [
         {
           "state": {
-            "description": "######\n#__P_#\n#_XO_#\n###__#\n######\n######"
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#__P_#\n#_XO_#\n###__#\n######\n######\n```"
           },
           "reasoning": "Pushing boxes through walls is forbidden.",
-          "action": "Left || Down || Up"
+          "action": "Left, Down, Up"
         },
         {
           "state": {
-            "description": "######\n#_P__#\n#_XO_#\n###__#\n######\n######"
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#_P__#\n#_XO_#\n###__#\n######\n######\n```"
           },
           "reasoning": "Move towards the wall to avoid obstacles.",
-          "action": "Left || Down || Right"
+          "action": "Left, Down, Right"
+        },
+        {
+          "state": {
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#_P__#\n#_XO_#\n###__#\n######\n######\n```\nEnd of trajectory"
+          }
         }
       ]
     },
@@ -36,17 +41,22 @@
       "steps": [
         {
           "state": {
-            "description": "######\n#___P#\n#_OX_#\n######\n######\n######"
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#___P#\n#_OX_#\n######\n######\n######\n```"
           },
           "reasoning": "Pushing the target boxes is crucial.",
-          "action": "Right || Up || Down"
+          "action": "Right, Up, Down"
         },
         {
           "state": {
-            "description": "######\n#____#\n#_OXP#\n######\n######\n######"
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#____#\n#_OXP#\n######\n######\n######\n```"
           },
           "reasoning": "Controlling the box next to the wall.",
-          "action": "Left || Down || Up"
+          "action": "Left, Down, Up"
+        },
+        {
+          "state": {
+            "description": "P: Player, _: Blank Space, #: Wall, X: Boxes, O: Targets\n```\n######\n#____#\n#_OXP#\n######\n######\n######\n```\nEnd of trajectory"
+          }
         }
       ]
     }

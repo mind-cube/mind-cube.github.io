@@ -157,28 +157,27 @@ const mathFormulas = {
             <div class="phase-card" id="rollout-phase">
               <h4>Rollout Stage: Reasoning-Interaction Trajectories</h4>
               <div class="phase-content">
-                <p>Given an initial state, the LLM generates multiple trajectories. At each step, the model receives the trajectory history and generates a reasoning-guided action:</p>
+                <p>Given an initial Sokoban puzzle state, the LLM generates multiple solving trajectories. At each step, the model receives the puzzle state and generates a reasoning-guided action to push boxes to goal positions:</p>
                 <div class="code-snippet">
-                  <code>&lt;think&gt;...reasoning process...&lt;/think&gt;&lt;ans&gt; action &lt;/ans&gt;</code>
+                  <code>&lt;think&gt;I need to push the box ($) to the goal (.) which is directly to the right.&lt;/think&gt;&lt;ans&gt; Right &lt;/ans&gt;</code>
                 </div>
-                <p>The environment receives the action and returns feedback (reward and next state).</p>
+                <p>The environment receives the action and returns the next state with the box pushed to the goal.</p>
                 
                 <div class="interactive-rollout">
                   <div class="rollout-step">
                     <div class="agent-box">
                       <div class="agent-icon">🤖</div>
                       <div class="agent-bubble thinking" id="agent-thinking">
-                        I need to solve this equation by first isolating the variable...
+                        I need to push the box ($) to the goal (.) which is directly to the right. To do this, I need to move right and push the box.
                       </div>
                       <div class="agent-bubble action" id="agent-action">
-                        x = 5
+                        Right
                       </div>
                     </div>
                     <div class="env-box">
                       <div class="env-icon">🌐</div>
                       <div class="env-bubble feedback" id="env-feedback">
-                        Reward: +1.0
-                        <br>New state: Problem solved correctly.
+                        #####<br>#_@*#<br>#####<br><br>Box pushed to goal position. State updated.
                       </div>
                     </div>
                   </div>

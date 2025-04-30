@@ -93,7 +93,7 @@ export function initTrajectoryViewer() {
     try {
       showLoading();
       
-      const response = await fetch('/data/trajectories/index.json');
+      const response = await fetch('/data/trajectories/qwen2.5-0.5b/index.json');
       if (!response.ok) {
         throw new Error(`Failed to load task index: ${response.status} ${response.statusText}`);
       }

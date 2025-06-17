@@ -16,209 +16,32 @@ const mathFormulas = {
 
 // @ts-ignore
 ---
-<section id="starpo" class="content-section alt-background"> 
+<section id="approaches" class="content-section alt-background">
   <div class="section-container">
-    <h2 class="section-title">StarPO (<b>S</b>tate-<b>T</b>hinking-<b>A</b>ction-<b>R</b>eward <b>P</b>olicy <b>O</b>ptimization)</h2>
-    
-    <!-- MathJax CDN -->
-    <script is:inline>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['\\(', '\\)']],
-          displayMath: [['\\[', '\\]']]
-        },
-        svg: {
-          fontCache: 'global'
-        }
-      };
-    </script>
-    <script is:inline src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script is:inline id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <!-- Move algorithm flowchart above the image -->
-    <div class="algorithm-visualization">
-      <div class="visual-container">
-        <div class="flow-step" id="step-initial">
-          <div class="step-icon">📋</div>
-          <div class="step-content">
-            <h4>Initial State</h4>
-          </div>
-        </div>
-        <div class="flow-arrow-wrapper">
-          <svg width="50" height="20" viewBox="0 0 50 20" class="flow-arrow">
-            <defs>
-              <marker id="arrow-marker" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                <polygon points="0 0, 10 3.5, 0 7" fill="#2a2f6c" />
-              </marker>
-            </defs>
-            <path d="M 0 10 L 40 10" stroke="#2a2f6c" stroke-width="2" marker-end="url(#arrow-marker)" />
-          </svg>
-        </div>
-        <div class="flow-step" id="step-reasoning">
-          <div class="step-icon">🧠</div>
-          <div class="step-content">
-            <h4>Reasoning</h4>
-          </div>
-        </div>
-        <div class="flow-arrow-wrapper">
-          <svg width="50" height="20" viewBox="0 0 50 20" class="flow-arrow">
-            <path d="M 0 10 L 40 10" stroke="#2a2f6c" stroke-width="2" marker-end="url(#arrow-marker)" />
-          </svg>
-        </div>
-        <div class="flow-step" id="step-action">
-          <div class="step-icon">⚡</div>
-          <div class="step-content">
-            <h4>Action</h4>
-          </div>
-        </div>
-        <div class="flow-arrow-wrapper">
-          <svg width="50" height="20" viewBox="0 0 50 20" class="flow-arrow">
-            <path d="M 0 10 L 40 10" stroke="#2a2f6c" stroke-width="2" marker-end="url(#arrow-marker)" />
-          </svg>
-        </div>
-        <div class="flow-step" id="step-reward">
-          <div class="step-icon">🏆</div>
-          <div class="step-content">
-            <h4>Reward</h4>
-          </div>
-        </div>
-        
-        <!-- Completely redesigned repeat arrow to match the image exactly -->
-        <div class="repeat-arrow-container">
-          <svg class="repeat-arrow" width="100%" height="50" viewBox="0 0 500 50">
-            <!-- Left vertical line with arrow pointing up to Initial State -->
-            <line x1="-50" y1="5" x2="-50" y2="30" stroke="#2a2f6c" stroke-width="2"/>
-            <!-- Horizontal line -->
-            <line x1="-50" y1="30" x2="560" y2="30" stroke="#2a2f6c" stroke-width="2"/>
-            <!-- Right vertical line coming down from Reward -->
-            <line x1="560" y1="5" x2="560" y2="30" stroke="#2a2f6c" stroke-width="2"/>
-            <!-- Arrow head pointing up to Initial State -->
-            <polygon points="-55,15 -50,5 -45,15" fill="#2a2f6c"/>
-            <!-- Text label for repeat -->
-            <text x="250" y="20" text-anchor="middle" fill="#2a2f6c" font-size="15" font-weight="700">Repeat</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-    
+    <h2 class="section-title">Three Approaches to Spatial Mental Models</h2>
     <div class="diagram-placeholder">
-      <img src="/starpo.png" alt="StarPO Framework" style=""/>
-      <p style="text-align: center; color: #888;">The StarPO (State-Thinking-Action-Reward Policy Optimization) framework with two interleaved stages: <strong>rollout stage</strong> and <strong>update stage</strong>.</p>
+      <img src="/figures/approaches.png" alt="Three approaches comparison figure" />
+      <p style="text-align: center; color: #888;">Comparison of three approaches: View Interpolation, Free-Form Reasoning, Cognitive Maps.</p>
     </div>
-    
-    <div class="spacer" style="height: 2rem;"></div>
-
-    <div class="algorithm-components">
-      <!-- <h3 class="components-title">The framework consists of two key components:</h3> -->
-      
-      <div class="component-card mdp-card" id="mdp-card">
-        <div class="component-header">
-          <h3 class="component-title">MDP Formulation</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="component-content active" id="mdp-content">
-          <p>We formulate agent-environment interactions as Markov Decision Processes (MDPs) where states and actions are token sequences, allowing LLMs to reason over environment dynamics.</p>
-          
-          <div class="interactive-mdp-viz">
-            <div class="mdp-state" id="state-0">
-              <span class="state-label">State <span set:html={mathFormulas.state} /></span>
-              <div class="state-tokens">token sequence</div>
-            </div>
-            <div class="mdp-arrow">
-              <svg width="50" height="20" viewBox="0 0 50 20">
-                <defs>
-                  <marker id="arrowhead1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#2a2f6c" />
-                  </marker>
-                </defs>
-                <path d="M 0 10 L 40 10" stroke="#2a2f6c" stroke-width="2" marker-end="url(#arrowhead1)" />
-              </svg>
-              <span class="action-label">Action <span set:html={mathFormulas.action} /></span>
-            </div>
-            <div class="mdp-state" id="state-1">
-              <span class="state-label">State <span set:html={mathFormulas.nextState} /></span>
-              <div class="state-tokens">new token sequence</div>
-            </div>
-          </div>
-          
-          <p>At time <span set:html="\\(t\\)" />, state <span set:html={mathFormulas.state} /> transitions to the next state through action <span set:html={mathFormulas.action} /> following a transition function <span set:html={mathFormulas.transitionFunction} />. The policy <span set:html={mathFormulas.policy} /> generates actions given the trajectory history. The objective is to maximize expected cumulative rewards <span set:html={mathFormulas.expectedRewards} /> across multiple interaction turns.</p>
-        </div>
-      </div>
-      
-      <div class="component-card starpo-card" id="starpo-card">
-        <div class="component-header">
-          <h3 class="component-title">StarPO: Reinforcing Reasoning via Trajectory-Level Optimization</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="component-content active" id="starpo-content">
-          <p>StarPO is a general RL framework for optimizing entire multi-turn interaction trajectories for LLM agents. The algorithm alternates between two phases:</p>
-          
-          <div class="starpo-phases">
-            <div class="phase-card" id="rollout-phase">
-              <h4>Rollout Stage: Reasoning-Interaction Trajectories</h4>
-              <div class="phase-content">
-                <p>Given an initial Sokoban puzzle state, the LLM generates multiple solving trajectories. At each step, the model receives the puzzle state and generates a reasoning-guided action to push boxes to goal positions:</p>
-                <div class="code-snippet">
-                  <code>&lt;think&gt;I need to push the box ($) to the goal (.) which is directly to the right.&lt;/think&gt;&lt;ans&gt; Right &lt;/ans&gt;</code>
-                </div>
-                <p>The environment receives the action and returns the next state with the box pushed to the goal.</p>
-                
-                <div class="interactive-rollout">
-                  <div class="rollout-step">
-                    <div class="agent-box">
-                      <div class="agent-icon">🤖</div>
-                      <div class="agent-bubble thinking" id="agent-thinking">
-                        I need to push the box ($) to the goal (.) which is directly to the right. To do this, I need to move right and push the box.
-                      </div>
-                      <div class="agent-bubble action" id="agent-action">
-                        Right
-                      </div>
-                    </div>
-                    <div class="env-box">
-                      <div class="env-icon">🌐</div>
-                      <div class="env-bubble feedback" id="env-feedback">
-                        #####<br>#_@*#<br>#####<br><br>Box pushed to goal position. State updated.
-                      </div>
-                    </div>
-                  </div>
-                  <button class="replay-button" id="replay-rollout">▶️ Replay Interaction</button>
-                </div>
-              </div>
-            </div>
-            
-            <div class="phase-card" id="update-phase">
-              <h4>Update Stage: Multi-turn Trajectory Optimization</h4>
-              <div class="phase-content">
-                <p>After generating trajectories, we train LLMs to optimize expected rewards. Instead of step-by-step optimization, StarPO optimizes entire trajectories using importance sampling. This approach enables long-horizon reasoning while maintaining computational efficiency.</p>
-                
-                <div class="optimization-strategies">
-                  <h4 class="strategies-title">StarPO supports multiple optimization strategies:</h4>
-                  <div class="strategy-tabs">
-                    <div class="strategy-tab active" data-strategy="ppo" id="ppo-tab">PPO</div>
-                    <div class="strategy-tab" data-strategy="grpo" id="grpo-tab">GRPO</div>
-                  </div>
-                  <div class="strategy-content">
-                    <div class="strategy-details active" id="ppo-content">
-                      <p><strong>PPO (Proximal Policy Optimization):</strong></p>
-                      <div class="formula">
-                        <span set:html={mathFormulas.ppoFormula} />
-                      </div>
-                    </div>
-                    <div class="strategy-details" id="grpo-content">
-                      <p><strong>GRPO (Group Relative Policy Optimization):</strong> </p>
-                      <div class="formula">
-                        <span set:html={mathFormulas.grpoFormula} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <p class="conclusion-text">Rollout and update stages interleave in StarPO, enabling both online and offline learning.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="approach-block">
+      <h3>View Interpolation</h3>
+      <p>Our first approach attempted to bridge sparse observations through visual continuity. By generating intermediate views between given observations using video interpolation and 3D reconstruction techniques, we hoped to simulate the mental animation process humans use for spatial reasoning. This method aimed to provide perceptual continuity that would support internal transformation capabilities like imagined rotation. Surprisingly, view interpolation proved entirely ineffective, often harming performance rather than helping.</p>
+    </div>
+    <div class="approach-block">
+      <h3>Free-Form Reasoning</h3>
+      <p>The second approach focused on verbalizing the mental simulation process through step-by-step natural language reasoning. This method reflects how spatial mental models support inferential reasoning, especially under ambiguous or incomplete observations. Free-form reasoning showed modest but consistent improvements, especially when models were trained to generate reasoning chains.</p>
+    </div>
+    <div class="approach-block">
+      <h3>Cognitive Maps</h3>
+      <p>The most promising approach involved generating structured cognitive maps—schematic 2D representations of object layouts in space. These maps capture locally coherent spatial relationships and support the kind of flexible, manipulable reasoning that characterizes human spatial mental models. Cognitive maps proved most effective when self-generated rather than externally provided.</p>
+    </div>
+    <div class="diagram-placeholder">
+      <img src="/figures/training-pipeline.png" alt="Training pipeline figure" />
+      <p style="text-align: center; color: #888;">Training pipeline: Supervised Fine-Tuning and Reinforcement Learning phases.</p>
+    </div>
+    <div class="training-block">
+      <h2 class="section-title">Training Pipeline</h2>
+      <p>Our training approach proceeded through two complementary phases: Supervised Fine-Tuning (SFT) to establish spatial reasoning capabilities, and Reinforcement Learning (RL) to refine them through outcome-based feedback. SFT involved constructing grounded reasoning chains and cognitive maps using detailed spatial annotations. RL used the VAGEN framework with Group Relative Policy Optimization, refining models through sparse but targeted rewards.</p>
     </div>
   </div>
 </section>

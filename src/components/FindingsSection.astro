@@ -1,71 +1,36 @@
 ---
 // FindingsSection.astro - Displays the findings section with collapsible cards
 ---
-<section id="findings" class="content-section">
+<section id="results" class="content-section">
   <div class="section-container">
-    <h2 class="section-title">Findings</h2>
-    
-    <div class="findings-components">
-      <div class="finding-card" id="finding-card-1">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 1: Single-turn RL may not be directly adapted to Multi-turn agent RL</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-1">
-          <p> Vanilla adaptations from single-turn methods like PPO and GRPO achieve early gains in agent settings but often collapse. A critic in PPO may delay instability, but would not prevent reasoning degradation, highlighting the need for specialized stabilization in agent settings. </p>
-        </div>
-      </div>
-      
-      <div class="finding-card" id="finding-card-2">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 2: Model collapse in agent RL is reflected as "Echo Trap" over training</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-2">
-          <p>We find that early-stage agent respond with diverse symbolic reasoning, but collapse into deterministic, repetitive templates after training. Models converge to fixed phrasing, indicating that RL may reinforce superficial patterns instead of general reasoning and forms an "Echo Trap" that hinders long-term generalization.</p>
-        </div>
-      </div>
-      
-      <div class="finding-card" id="finding-card-3">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 3: Collapse follows similar dynamics and can be anticipated by indicators</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-3">
-          <p>Reward standard deviation and entropy often fluctuate before performance degrades, while gradient norm spikes typically mark the point of irreversible collapse. These metrics provide early indicators and motivate the need for stabilization strategies.</p>
-        </div>
-      </div>
-      
-      <div class="finding-card" id="finding-card-4">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 4: Filtering low-variance trajectories improves stability and efficiency</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-4">
-          <p>Training on high-variance prompts delays or eliminates collapse in multi-turn RL. StarPO-S improves performance and reduces update steps by discarding low-information rollouts, especially under PPO. This aligns with active learning principles, where uncertain examples offer the most informative learning signals.</p>
-        </div>
-      </div>
-      
-      <div class="finding-card" id="finding-card-5">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 5: Task diversity,  action budget, and rollout frequency affect data quality</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-5">
-          <p>Diverse task instances enable better policy contrast and generalization across environments.
-            Moderate action budgets provide enough planning space and avoid the noise introduced by overly long sequences. Up-to-date rollouts ensure optimization targets remain aligned with current policy behavior. </p>
-        </div>
-      </div>
-      
-      <div class="finding-card" id="finding-card-6">
-        <div class="finding-header">
-          <h3 class="finding-title">Finding 6: Reasoning fails to emerge without meticulous reward design</h3>
-          <div class="expand-icon">-</div>
-        </div>
-        <div class="finding-content active" id="finding-content-6">
-          While symbolic reasoning can emerge in simple, single-turn tasks under weak supervision, it fails to persist in multi-turn environments without the reward design explicitly encouraging interpretable intermediate reasoning steps. We observe that even with structured prompts, reasoning gradually decays during training if the reward signal focuses only on final outcomes. This suggests that without meticulous reward shaping, agents may tend to collapse into shortcut behaviors that bypass reasoning altogether.
-        </div>
-      </div>
+    <h2 class="section-title">Key Findings</h2>
+    <div class="diagram-placeholder">
+      <img src="/figures/results.png" alt="Results comparison chart" />
+      <p style="text-align: center; color: #888;">Performance comparison of different approaches on MINDCUBE.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-header"><h3 class="finding-title">External scaffolding is surprisingly ineffective</h3></div>
+      <div class="finding-content active"><p>Providing models with ground-truth cognitive maps improved performance by only 0.9%, while view interpolation actually decreased performance by 0.6%. Even free-form reasoning prompts, while helpful, provided modest gains of just 1.6%.</p></div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-header"><h3 class="finding-title">Self-generated spatial representations yield dramatic improvements</h3></div>
+      <div class="finding-content active"><p>Teaching models to generate their own cognitive maps and reason over them boosted performance from 38.3% to 61.7%—a gain of 23.5 percentage points. Reinforcement learning further increased performance to 76.1% (+37.8%).</p></div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-header"><h3 class="finding-title">Why self-generation works: representational dissonance</h3></div>
+      <div class="finding-content active"><p>Externally provided maps often conflict with the model's internal spatial processing, leading to confusion. Self-generation ensures alignment between internal representations and reasoning processes, even if the maps are less accurate than ground truth.</p></div>
+    </div>
+    <div class="diagram-placeholder">
+      <img src="/figures/map-quality.png" alt="Map quality comparison" />
+      <p style="text-align: center; color: #888;">Self-generated map quality improves with training and correlates with reasoning performance.</p>
+    </div>
+    <div class="finding-card">
+      <div class="finding-header"><h3 class="finding-title">Training pipeline synergy</h3></div>
+      <div class="finding-content active"><p>Supervised fine-tuning (SFT) establishes the ability to generate structured spatial representations. Reinforcement learning (RL) refines these capabilities, leading to more accurate maps and more effective reasoning chains.</p></div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-header"><h3 class="finding-title">Broader impact</h3></div>
+      <div class="finding-content active"><p>The principles established by MINDCUBE could inform the development of novel training paradigms for spatial intelligence and internal model construction in AI, with implications for robotics and real-world applications.</p></div>
     </div>
   </div>
 </section>

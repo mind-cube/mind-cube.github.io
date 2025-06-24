@@ -1,709 +1,528 @@
 ---
-// Algorithm.astro - Displays information about the StarPO algorithm framework
-import { Fragment } from 'astro/jsx-runtime'
-
-// Predefined math formula variables
-const mathFormulas = {
-  state: "\\(s_t\\)",
-  action: "\\(a_t\\)",
-  nextState: "\\(s_{t+1}\\)",
-  transitionFunction: "\\(P(s_{t+1} | s_t, a_t)\\)",
-  policy: "\\(\\pi(a_t | s_t)\\)",
-  expectedRewards: "\\(\\mathbb{E}_\\pi[\\sum_t \\gamma^t r_t]\\)",
-  ppoFormula: "\\[J_{\\text{PPO}}(\\theta) = \\frac{1}{G} \\sum_{i=1}^G \\frac{1}{|\\tau_i|} \\sum_{t=1}^{|\\tau_i|} \\min \\left( \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)} A_{i,t}, \\text{clip}\\left(\\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)}, 1-\\epsilon, 1+\\epsilon\\right) A_{i,t} \\right)\\]",
-  grpoFormula: "\\[\\hat{A}_{i,t} = \\frac{R(\\tau_i) - \\text{mean}(\\{R(\\tau_1), \\ldots, R(\\tau_G)\\})}{\\text{std}(\\{R(\\tau_1), \\ldots, R(\\tau_G)\\})}\\] \\[J_{\\text{GRPO}}(\\theta) = \\frac{1}{G} \\sum_{i=1}^G \\frac{1}{|\\tau_i|} \\sum_{t=1}^{|\\tau_i|} \\min \\left( \\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)} \\hat{A}_{i,t}, \\text{clip}\\left(\\frac{\\pi_\\theta(a_t|s_t)}{\\pi_{\\text{old}}(a_t|s_t)}, 1-\\epsilon, 1+\\epsilon\\right) \\hat{A}_{i,t} \\right)\\]"
-}
-
-// @ts-ignore
+// Algorithm.astro - Leaderboard section showing model performance comparisons
 ---
-<section id="approaches" class="content-section alt-background">
+
+<section id="leaderboard" class="content-section alt-background">
   <div class="section-container">
-    <h2 class="section-title">Three Approaches to Spatial Mental Models</h2>
-    <div class="diagram-placeholder">
-      <img src="/figures/approaches.png" alt="Three approaches comparison figure" />
-      <p style="text-align: center; color: #888;">Comparison of three approaches: View Interpolation, Free-Form Reasoning, Cognitive Maps.</p>
-    </div>
-    <div class="approach-block">
-      <h3>View Interpolation</h3>
-      <p>Our first approach attempted to bridge sparse observations through visual continuity. By generating intermediate views between given observations using video interpolation and 3D reconstruction techniques, we hoped to simulate the mental animation process humans use for spatial reasoning. This method aimed to provide perceptual continuity that would support internal transformation capabilities like imagined rotation. Surprisingly, view interpolation proved entirely ineffective, often harming performance rather than helping.</p>
-    </div>
-    <div class="approach-block">
-      <h3>Free-Form Reasoning</h3>
-      <p>The second approach focused on verbalizing the mental simulation process through step-by-step natural language reasoning. This method reflects how spatial mental models support inferential reasoning, especially under ambiguous or incomplete observations. Free-form reasoning showed modest but consistent improvements, especially when models were trained to generate reasoning chains.</p>
-    </div>
-    <div class="approach-block">
-      <h3>Cognitive Maps</h3>
-      <p>The most promising approach involved generating structured cognitive maps—schematic 2D representations of object layouts in space. These maps capture locally coherent spatial relationships and support the kind of flexible, manipulable reasoning that characterizes human spatial mental models. Cognitive maps proved most effective when self-generated rather than externally provided.</p>
-    </div>
-    <div class="diagram-placeholder">
-      <img src="/figures/training-pipeline.png" alt="Training pipeline figure" />
-      <p style="text-align: center; color: #888;">Training pipeline: Supervised Fine-Tuning and Reinforcement Learning phases.</p>
-    </div>
-    <div class="training-block">
-      <h2 class="section-title">Training Pipeline</h2>
-      <p>Our training approach proceeded through two complementary phases: Supervised Fine-Tuning (SFT) to establish spatial reasoning capabilities, and Reinforcement Learning (RL) to refine them through outcome-based feedback. SFT involved constructing grounded reasoning chains and cognitive maps using detailed spatial annotations. RL used the VAGEN framework with Group Relative Policy Optimization, refining models through sparse but targeted rewards.</p>
+    <h2 class="section-title">Leaderboard</h2>
+    <p class="section-description">Performance comparison of different models and approaches on our spatial reasoning benchmark.</p>
+    
+    <div class="leaderboard-container">
+      <div class="table-controls">
+        <p class="sort-info">Click on column headers to sort the results</p>
+        <div class="model-legend">
+          <span class="legend-item">
+            <span class="legend-color baseline-legend"></span>
+            Baseline
+          </span>
+          <span class="legend-item">
+            <span class="legend-color open-weight-legend"></span>
+            Open-Weight Multi Image Models
+          </span>
+          <span class="legend-item">
+            <span class="legend-color proprietary-legend"></span>
+            Proprietary Models
+          </span>
+          <span class="legend-item">
+            <span class="legend-color spatial-legend"></span>
+            Spatial Models
+          </span>
+        </div>
+      </div>
+      
+      <div class="table-wrapper">
+        <table class="leaderboard-table" id="leaderboardTable">
+          <thead>
+            <tr>
+              <th class="sortable" data-column="0">
+                Method
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th class="sortable highlighted-overall" data-column="1">
+                Overall
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th class="sortable highlighted-rotation" data-column="2">
+                Rotation
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th class="sortable highlighted-among" data-column="3">
+                Among
+                <span class="sort-arrow">↕</span>
+              </th>
+              <th class="sortable highlighted-around" data-column="4">
+                Around
+                <span class="sort-arrow">↕</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Baseline Models -->
+            <tr class="baseline-model" data-values='["Random (chance)", 32.35, 36.36, 32.29, 30.66]'>
+              <td class="model-name">Random (chance)</td>
+              <td>32.35</td>
+              <td>36.36</td>
+              <td>32.29</td>
+              <td>30.66</td>
+            </tr>
+            <tr class="baseline-model" data-values='["Random (frequency)", 33.02, 38.30, 32.66, 35.79]'>
+              <td class="model-name">Random (frequency)</td>
+              <td>33.02</td>
+              <td>38.30</td>
+              <td>32.66</td>
+              <td>35.79</td>
+            </tr>
+            
+            <!-- Open-Weight Multi Image Models -->
+            <tr class="open-weight-model highlight-top" data-values='["LLaVA-Onevision-7B", 47.43, 36.45, 48.42, 44.09]'>
+              <td class="model-name">LLaVA-Onevision-7B</td>
+              <td class="score-highlight">47.43</td>
+              <td>36.45</td>
+              <td class="score-highlight">48.42</td>
+              <td class="score-highlight">44.09</td>
+            </tr>
+            <tr class="open-weight-model highlight-top" data-values='["DeepSeek-VL2-Small", 47.62, 37.00, 50.38, 26.91]'>
+              <td class="model-name">DeepSeek-VL2-Small</td>
+              <td class="score-highlight-strong">47.62</td>
+              <td>37.00</td>
+              <td class="score-highlight-strong">50.38</td>
+              <td>26.91</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["Gemma-3-12B-it", 46.67, 38.39, 48.38, 34.63]'>
+              <td class="model-name">Gemma-3-12B-it</td>
+              <td>46.67</td>
+              <td class="score-highlight">38.39</td>
+              <td>48.38</td>
+              <td>34.63</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["mPLUG-Owl3-7B-241101", 44.85, 37.84, 47.11, 26.91]'>
+              <td class="model-name">mPLUG-Owl3-7B-241101</td>
+              <td>44.85</td>
+              <td>37.84</td>
+              <td>47.11</td>
+              <td>26.91</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["LLaVA-Video-Qwen-7B", 41.96, 35.71, 43.55, 30.12]'>
+              <td class="model-name">LLaVA-Video-Qwen-7B</td>
+              <td>41.96</td>
+              <td>35.71</td>
+              <td>43.55</td>
+              <td>30.12</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["Mantis-8B (SigLip)", 41.05, 37.65, 40.23, 50.99]'>
+              <td class="model-name">Mantis-8B (SigLip)</td>
+              <td>41.05</td>
+              <td>37.65</td>
+              <td>40.23</td>
+              <td class="score-highlight-strong">50.99</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["Idefics-8B-Llama3", 35.86, 35.15, 35.94, 35.49]'>
+              <td class="model-name">Idefics-8B-Llama3</td>
+              <td>35.86</td>
+              <td>35.15</td>
+              <td>35.94</td>
+              <td>35.49</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["Qwen2.5-VL-3B-Instruct", 33.21, 37.37, 33.26, 30.34]'>
+              <td class="model-name">Qwen2.5-VL-3B-Instruct</td>
+              <td>33.21</td>
+              <td>37.37</td>
+              <td>33.26</td>
+              <td>30.34</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["LongVA-7B", 29.46, 35.89, 29.55, 24.88]'>
+              <td class="model-name">LongVA-7B</td>
+              <td>29.46</td>
+              <td>35.89</td>
+              <td>29.55</td>
+              <td>24.88</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["Qwen2.5-VL-7B-Instruct", 29.26, 38.76, 29.50, 21.35]'>
+              <td class="model-name">Qwen2.5-VL-7B-Instruct</td>
+              <td>29.26</td>
+              <td class="score-highlight-strong">38.76</td>
+              <td>29.50</td>
+              <td>21.35</td>
+            </tr>
+            <tr class="open-weight-model" data-values='["InternVL2.5-8B", 18.68, 36.45, 18.20, 13.11]'>
+              <td class="model-name">InternVL2.5-8B</td>
+              <td>18.68</td>
+              <td>36.45</td>
+              <td>18.20</td>
+              <td>13.11</td>
+            </tr>
+            
+            <!-- Proprietary Models -->
+            <tr class="proprietary-model" data-values='["GPT-4o", 38.81, 32.65, 40.17, 29.16]'>
+              <td class="model-name">GPT-4o</td>
+              <td>38.81</td>
+              <td>32.65</td>
+              <td>40.17</td>
+              <td>29.16</td>
+            </tr>
+            <tr class="proprietary-model" data-values='["Claude-3.7-Sonnet-20250219", 34.89, 37.65, 35.93, 23.17]'>
+              <td class="model-name">Claude-3.7-Sonnet-20250219</td>
+              <td>34.89</td>
+              <td>37.65</td>
+              <td>35.93</td>
+              <td>23.17</td>
+            </tr>
+            
+            <!-- Spatial Models -->
+            <tr class="spatial-model" data-values='["RoboBrain", 37.38, 35.80, 38.28, 29.53]'>
+              <td class="model-name">RoboBrain</td>
+              <td>37.38</td>
+              <td>35.80</td>
+              <td>38.28</td>
+              <td>29.53</td>
+            </tr>
+            <tr class="spatial-model" data-values='["Space-LlaVA", 33.28, 38.02, 33.71, 26.32]'>
+              <td class="model-name">Space-LlaVA</td>
+              <td>33.28</td>
+              <td>38.02</td>
+              <td>33.71</td>
+              <td>26.32</td>
+            </tr>
+            <tr class="spatial-model" data-values='["Spatial-MLLM", 32.06, 38.39, 20.92, 32.82]'>
+              <td class="model-name">Spatial-MLLM</td>
+              <td>32.06</td>
+              <td>38.39</td>
+              <td>20.92</td>
+              <td>32.82</td>
+            </tr>
+            <tr class="spatial-model" data-values='["SpaceMantis", 22.81, 37.65, 21.26, 29.32]'>
+              <td class="model-name">SpaceMantis</td>
+              <td>22.81</td>
+              <td>37.65</td>
+              <td>21.26</td>
+              <td>29.32</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .algorithm-main-image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 3rem;
-  }
 
-  .main-algorithm-img {
-    max-width: 100%;
-    width: 1000px;
-    height: auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  }
 
-  .image-caption {
-    max-width: 800px;
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.6;
-  }
-
-  .algorithm-components {
-    margin-bottom: 3rem;
-  }
-
-  .components-title {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #2a2f6c;
-    font-size: 1.5rem;
-  }
-
-  .component-card {
-    background-color: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2rem;
-    transition: all 0.3s ease;
-  }
-
-  .component-card:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    transform: translateY(-5px);
-  }
-
-  .component-header {
-    background-color: #2a2f6c;
-    color: white;
-    padding: 1.2rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .component-title {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-
-  .expand-icon {
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: transform 0.3s ease;
-  }
-
-  .component-content {
-    padding: 1.5rem;
-    display: none;
-  }
-
-  .component-content.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .mdp-card .component-header {
-    background-color: #2a2f6c;
-  }
-
-  .starpo-card .component-header {
-    background-color: #4a3f9f;
-  }
-
-  .interactive-mdp-viz {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .leaderboard-container {
     margin: 2rem 0;
-    gap: 0.5rem;
   }
 
-  .mdp-state {
-    background-color: #f0f2f5;
-    border: 2px solid #2a2f6c;
-    border-radius: 8px;
-    padding: 1rem;
-    width: 150px;
-    text-align: center;
-    transition: all 0.3s ease;
-  }
-
-  .mdp-state:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .state-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #2a2f6c;
-  }
-
-  .state-tokens {
-    font-family: monospace;
-    padding: 0.5rem;
-    background-color: #e6e8eb;
-    border-radius: 4px;
-  }
-
-  .mdp-arrow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 0.5rem;
-  }
-
-  .action-label {
-    font-weight: bold;
-    color: #2a2f6c;
-    margin-top: 0.25rem;
-  }
-
-  .starpo-phases {
-    margin-top: 2rem;
-  }
-
-  .phase-card {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    border-left: 4px solid #4a3f9f;
-  }
-
-  .phase-card h4 {
-    color: #2a2f6c;
-    margin-top: 0;
+  .table-controls {
     margin-bottom: 1rem;
-    font-size: 1.2rem;
+    text-align: center;
   }
 
-  .phase-content {
-    padding-left: 1rem;
+  .sort-info {
+    color: #666;
+    font-style: italic;
+    margin: 0 0 1rem 0;
   }
 
-  .code-snippet {
-    background-color: #1e1e3f;
-    border-radius: 6px;
-    padding: 1rem;
-    margin: 1rem 0;
-    overflow-x: auto;
-  }
-
-  .code-snippet code {
-    color: #e7e7e7;
-    font-family: monospace;
-  }
-
-  .interactive-rollout {
-    margin: 2rem 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1.5rem;
-    background-color: #fff;
-  }
-
-  .rollout-step {
+  .model-legend {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     margin-bottom: 1rem;
   }
 
-  .agent-box, .env-box {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-  }
-
-  .agent-icon, .env-icon {
-    font-size: 2rem;
+  .legend-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #f0f2f5;
-    flex-shrink: 0;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
   }
 
-  .agent-bubble, .env-bubble {
-    background-color: #f0f2f5;
-    border-radius: 12px;
-    padding: 1rem;
-    position: relative;
-    max-width: 80%;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .agent-bubble:before, .env-bubble:before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: -10px;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #f0f2f5;
-  }
-
-  .agent-bubble.thinking {
-    background-color: #e6f3ff;
-    border-left: 3px solid #2a2f6c;
-  }
-
-  .agent-bubble.thinking:before {
-    border-right-color: #e6f3ff;
-  }
-
-  .agent-bubble.action {
-    background-color: #e9f7ef;
-    border-left: 3px solid #27ae60;
-    margin-top: 0.5rem;
-  }
-
-  .agent-bubble.action:before {
-    border-right-color: #e9f7ef;
-  }
-
-  .env-bubble.feedback {
-    background-color: #fef5e7;
-    border-left: 3px solid #f39c12;
-  }
-
-  .env-bubble.feedback:before {
-    border-right-color: #fef5e7;
-  }
-
-  .replay-button {
-    background-color: #2a2f6c;
-    color: white;
-    border: none;
+  .legend-color {
+    width: 16px;
+    height: 16px;
     border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
-  }
-
-  .replay-button:hover {
-    background-color: #4a3f9f;
-  }
-
-  .optimization-strategies {
-    margin: 1.5rem 0;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
   }
 
-  .strategies-title {
-    margin: 0;
-    padding: 1rem 1.5rem;
-    background-color: #f0f2f5;
-    border-bottom: 1px solid #ddd;
-    color: #2a2f6c;
-    font-size: 1.1rem;
-  }
-
-  .strategy-tabs {
-    display: flex;
-    background-color: #f0f2f5;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .strategy-tab {
-    padding: 0.75rem 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .strategy-tab:hover {
-    background-color: #e6e8eb;
-  }
-
-  .strategy-tab.active {
-    background-color: #2a2f6c;
-    color: white;
-    font-weight: bold;
-  }
-
-  .strategy-content {
-    padding: 1.5rem;
-    background-color: #fff;
-  }
-
-  .strategy-details {
-    display: none;
-  }
-
-  .strategy-details.active {
-    display: block;
-    animation: fadeIn 0.5s ease;
-  }
-
-  .formula {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem;
+  .baseline-legend {
     background-color: #f8f9fa;
-    border-radius: 6px;
-    margin: 1rem 0;
-    min-height: 50px;
   }
 
-  .conclusion-text {
-    font-weight: 600;
-    margin-top: 1.5rem;
-    color: #2a2f6c;
-  }
-
-  .algorithm-visualization {
-    margin: 1rem 0 3rem 0;
-    position: relative;
-    padding-bottom: 1rem;
-  }
-  
-  .algorithm-visualization h3 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #2a2f6c;
-  }
-  
-  .visual-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 12px;
-    position: relative;
-    margin-bottom: 3rem;
-  }
-  
-  .flow-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 8px;
-    padding: 1.2rem;
-    width: 120px;
-    height: 120px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 2;
-  }
-
-  .flow-step:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-
-  .step-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .step-content {
-    text-align: center;
-    width: 100%;
-  }
-
-  .step-content h4 {
-    margin: 0;
-    color: #2a2f6c;
-    font-size: 1.1rem;
-  }
-
-  .flow-arrow-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .flow-arrow {
-    flex-shrink: 0;
-    z-index: 1;
-  }
-
-  .flow-step.active {
-    border: 2px solid #2a2f6c;
+  .open-weight-legend {
     background-color: #f0f8ff;
   }
 
-  /* New repeat arrow styling */
-  .repeat-arrow-container {
+  .proprietary-legend {
+    background-color: #fff5f0;
+  }
+
+  .spatial-legend {
+    background-color: #f0fff0;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+  }
+
+  .leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .leaderboard-table th {
+    background: linear-gradient(135deg, #2a2f6c, #3a4b8e);
+    color: white;
+    padding: 1rem 0.8rem;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .leaderboard-table th:hover {
+    background: linear-gradient(135deg, #3a4b8e, #4a5b9e);
+  }
+
+  .leaderboard-table th:last-child {
+    border-right: none;
+  }
+
+  .sortable .sort-arrow {
     position: absolute;
-    width: 100%;
-    height: 70px;
-    bottom: -40px;
-    left: 0;
-    overflow: visible;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.7;
+    font-size: 0.8rem;
   }
 
-  .repeat-arrow {
-    width: 100%;
-    height: 50px;
-    overflow: visible;
+  .sortable.sorted-asc .sort-arrow::after {
+    content: " ↑";
+    color: #ffd700;
   }
 
-  .math-var {
-    font-family: inherit;
+  .sortable.sorted-desc .sort-arrow::after {
+    content: " ↓";
+    color: #ffd700;
   }
-  
-  .state-label, .action-label {
-    font-weight: bold;
+
+  /* Header highlighting */
+  .highlighted-overall {
+    background: linear-gradient(135deg, #e8e8e8, #f0f0f0) !important;
+    color: #333 !important;
+  }
+
+  .highlighted-rotation {
+    background: linear-gradient(135deg, #CFDDA6, #d9e7b6) !important;
+    color: #333 !important;
+  }
+
+  .highlighted-among {
+    background: linear-gradient(135deg, #DABFDA, #e5cfea) !important;
+    color: #333 !important;
+  }
+
+  .highlighted-around {
+    background: linear-gradient(135deg, #FDEEC7, #fef5d7) !important;
+    color: #333 !important;
+  }
+
+  .leaderboard-table td {
+    padding: 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+  }
+
+  .model-name {
+    text-align: left !important;
+    font-weight: 500;
     color: #2a2f6c;
   }
-  
-  .math-formula {
-    font-family: 'Times New Roman', serif;
-    font-size: 1.2rem;
+
+
+
+  /* Model type backgrounds */
+  .baseline-model {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  .baseline-model:hover {
+    background-color: #e9ecef;
+  }
+
+  .open-weight-model {
+    background-color: #f0f8ff;
+  }
+
+  .open-weight-model:hover {
+    background-color: #e6f3ff;
+  }
+
+  .proprietary-model {
+    background-color: #fff5f0;
+  }
+
+  .proprietary-model:hover {
+    background-color: #ffe6d9;
+  }
+
+  .spatial-model {
+    background-color: #f0fff0;
+  }
+
+  .spatial-model:hover {
+    background-color: #e6ffe6;
+  }
+
+  /* Score highlighting */
+  .score-highlight {
+    background-color: rgba(66, 139, 202, 0.2);
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .score-highlight-strong {
+    background-color: rgba(66, 139, 202, 0.4);
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+    color: #1e3a5f;
+  }
+
+  .highlight-top {
+    border-left: 4px solid #428bca;
+  }
+
+  .leaderboard-notes {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+  }
+
+  .leaderboard-notes h3 {
+    margin-top: 0;
+    color: #2a2f6c;
+    font-size: 1.3rem;
+  }
+
+  .leaderboard-notes ul {
+    margin-bottom: 0;
+  }
+
+  .leaderboard-notes li {
+    margin-bottom: 0.7rem;
     line-height: 1.5;
-    display: block;
-    text-align: center;
-    letter-spacing: 0.02em;
-    padding: 0.8rem;
-  }
-  
-  .math-formula sub,
-  .math-var sub {
-    font-size: 0.75em;
-    position: relative;
-    bottom: -0.25em;
-    line-height: 0;
-  }
-  
-  .math-formula sup,
-  .math-var sup {
-    font-size: 0.75em;
-    position: relative;
-    top: -0.5em;
-    line-height: 0;
   }
 
+  /* Responsive design */
   @media (max-width: 768px) {
-    .interactive-mdp-viz {
+    .leaderboard-table {
+      font-size: 0.85rem;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+      padding: 0.6rem 0.4rem;
+    }
+
+    .model-name {
+      font-size: 0.8rem;
+    }
+
+    .model-legend {
       flex-direction: column;
-      gap: 1rem;
+      align-items: center;
+      gap: 0.8rem;
     }
 
-    .mdp-arrow {
-      transform: rotate(90deg);
-      margin: 1rem 0;
-    }
-
-    .visual-container {
-      flex-direction: column;
-      padding: 2rem 1rem;
-    }
-
-    .flow-arrow-wrapper {
-      transform: rotate(90deg);
-      margin: 0.5rem 0;
-    }
-
-    .repeat-arrow-container {
-      display: none; /* Hide on mobile */
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .main-algorithm-img {
-      width: 90%;
+    .legend-item {
+      font-size: 0.85rem;
     }
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Component expansion functionality
-    const mdpCard = document.getElementById('mdp-card');
-    const mdpContent = document.getElementById('mdp-content');
-    const starpoCard = document.getElementById('starpo-card');
-    const starpoContent = document.getElementById('starpo-content');
-
-    if (mdpCard && mdpContent) {
-      const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;
-      
-      mdpCard.addEventListener('click', (e: Event) => {
-        const target = e.target as HTMLElement;
-        if (target.closest && target.closest('.component-content')) return;
-        
-        mdpContent.classList.toggle('active');
-        if (mdpExpandIcon) {
-          if (mdpContent.classList.contains('active')) {
-            mdpExpandIcon.textContent = '-';
-          } else {
-            mdpExpandIcon.textContent = '+';
-          }
-        }
+  // Add sorting functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const table = document.getElementById('leaderboardTable') as HTMLTableElement | null;
+    if (!table) return;
+    
+    const headers = table.querySelectorAll('th.sortable');
+    
+    headers.forEach((header, index) => {
+      header.addEventListener('click', () => {
+        sortTable(index);
       });
-    }
-
-    if (starpoCard && starpoContent) {
-      const starpoExpandIcon = starpoCard.querySelector('.expand-icon') as HTMLElement | null;
+    });
+    
+    let currentSort = { column: 1, direction: 'desc' as 'asc' | 'desc' };
+    
+    function sortTable(columnIndex: number) {
+      if (!table) return;
       
-      starpoCard.addEventListener('click', (e: Event) => {
-        const target = e.target as HTMLElement;
-        if (target.closest && target.closest('.component-content')) return;
-        
-        starpoContent.classList.toggle('active');
-        if (starpoExpandIcon) {
-          if (starpoContent.classList.contains('active')) {
-            starpoExpandIcon.textContent = '-';
-          } else {
-            starpoExpandIcon.textContent = '+';
-          }
-        }
-      });
-    }
-
-    // Modify initialization display: keep both cards collapsed
-    if (mdpContent && mdpCard) {
-      mdpContent.classList.add('active');
-      const mdpExpandIcon = mdpCard.querySelector('.expand-icon') as HTMLElement | null;
-      if (mdpExpandIcon) {
-        mdpExpandIcon.textContent = '-';
+      const tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      
+      const rows = Array.from(tbody.querySelectorAll('tr')) as HTMLTableRowElement[];
+      
+      // Determine sort direction
+      if (currentSort.column === columnIndex) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.direction = 'desc';
+        currentSort.column = columnIndex;
       }
+      
+      // Update header indicators
+      headers.forEach(h => {
+        h.classList.remove('sorted-asc', 'sorted-desc');
+      });
+      headers[columnIndex]?.classList.add(`sorted-${currentSort.direction}`);
+      
+      // Sort rows
+      rows.sort((a, b) => {
+        const aDataset = (a as HTMLTableRowElement).dataset.values;
+        const bDataset = (b as HTMLTableRowElement).dataset.values;
+        
+        if (!aDataset || !bDataset) return 0;
+        
+        const aValues = JSON.parse(aDataset);
+        const bValues = JSON.parse(bDataset);
+        
+        let aVal = aValues[columnIndex];
+        let bVal = bValues[columnIndex];
+        
+        if (columnIndex === 0) { // Model name - string comparison
+          aVal = aVal.toLowerCase();
+          bVal = bVal.toLowerCase();
+          return currentSort.direction === 'asc' ? 
+            aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        } else { // Numeric comparison
+          aVal = parseFloat(aVal);
+          bVal = parseFloat(bVal);
+          return currentSort.direction === 'asc' ? aVal - bVal : bVal - aVal;
+        }
+      });
+      
+      // Re-insert sorted rows
+      rows.forEach(row => tbody.appendChild(row));
     }
     
-    if (starpoContent && starpoCard) {
-      starpoContent.classList.add('active');
-      const starpoExpandIcon = starpoCard.querySelector('.expand-icon') as HTMLElement | null;
-      if (starpoExpandIcon) {
-        starpoExpandIcon.textContent = '-';
-      }
-    }
-
-    // Strategy tab switching
-    const ppoTab = document.getElementById('ppo-tab');
-    const grpoTab = document.getElementById('grpo-tab');
-    const ppoContent = document.getElementById('ppo-content');
-    const grpoContent = document.getElementById('grpo-content');
-
-    if (ppoTab && grpoTab && ppoContent && grpoContent) {
-      ppoTab.addEventListener('click', () => {
-        ppoTab.classList.add('active');
-        grpoTab.classList.remove('active');
-        ppoContent.classList.add('active');
-        grpoContent.classList.remove('active');
-      });
-
-      grpoTab.addEventListener('click', () => {
-        grpoTab.classList.add('active');
-        ppoTab.classList.remove('active');
-        grpoContent.classList.add('active');
-        ppoContent.classList.remove('active');
-      });
-    }
-
-    // Rollout animation
-    const replayRollout = document.getElementById('replay-rollout');
-    const agentThinking = document.getElementById('agent-thinking') as HTMLElement | null;
-    const agentAction = document.getElementById('agent-action') as HTMLElement | null;
-    const envFeedback = document.getElementById('env-feedback') as HTMLElement | null;
-
-    function animateRollout() {
-      // Reset
-      if (agentThinking) agentThinking.style.opacity = '0';
-      if (agentAction) agentAction.style.opacity = '0';
-      if (envFeedback) envFeedback.style.opacity = '0';
-      
-      // Animate thinking
-      setTimeout(() => {
-        if (agentThinking) {
-          agentThinking.style.opacity = '1';
-          agentThinking.style.transform = 'translateY(0)';
-        }
-      }, 500);
-      
-      // Animate action
-      setTimeout(() => {
-        if (agentAction) {
-          agentAction.style.opacity = '1';
-          agentAction.style.transform = 'translateY(0)';
-        }
-      }, 2000);
-      
-      // Animate feedback
-      setTimeout(() => {
-        if (envFeedback) {
-          envFeedback.style.opacity = '1';
-          envFeedback.style.transform = 'translateY(0)';
-        }
-      }, 3500);
-    }
-
-    if (replayRollout) {
-      replayRollout.addEventListener('click', animateRollout);
-      
-      // Run animation on load
-      setTimeout(animateRollout, 1000);
-    }
-
-    // Interactive algorithm flow
-    const flowSteps = document.querySelectorAll('.flow-step');
-    let currentStepIndex = 0;
-
-    function highlightNextStep() {
-      // Reset all steps
-      flowSteps.forEach(step => step.classList.remove('active'));
-      
-      // Highlight current step
-      if (flowSteps[currentStepIndex]) {
-        flowSteps[currentStepIndex].classList.add('active');
-      }
-      
-      // Move to next step
-      currentStepIndex = (currentStepIndex + 1) % flowSteps.length;
-    }
-
-    // Highlight steps every 2 seconds
-    if (flowSteps.length > 0) {
-      highlightNextStep(); // Highlight first step immediately
-      setInterval(highlightNextStep, 2000);
-    }
+    // Initial sort by overall score
+    sortTable(1);
   });
 </script> 

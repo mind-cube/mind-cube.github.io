@@ -16,6 +16,19 @@
   margin-bottom: 0.5rem; 
 }
 
+.title-with-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.title-logo {
+  height: 80px;
+  width: auto;
+  flex-shrink: 0;
+}
+
 .title-icon { 
   height: 60px; 
   width: auto; 
@@ -27,7 +40,14 @@
   font-weight: 800; 
   color: #2a2f6c; 
   min-height: 1.2em; 
-  flex-shrink: 0; 
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.title-line {
+  display: block;
 }
 
 .subtitle { 
@@ -81,8 +101,48 @@
   box-shadow: none; 
 }
 
-.diagram-placeholder { 
-  margin-top: 3rem; 
+.teaser-figure {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.teaser-segment {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.teaser-segment img {
+  width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.teaser-segment-1 {
+  animation-delay: 0.3s;
+}
+
+.teaser-segment-2 {
+  animation-delay: 0.6s;
+}
+
+.teaser-segment-3 {
+  animation-delay: 0.9s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Authors section in Hero component */
@@ -113,6 +173,15 @@
     gap: 0.5rem;
   }
   
+  .title-with-logo {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .title-logo {
+    height: 60px;
+  }
+  
   .main-title {
     font-size: 3rem;
   }
@@ -127,5 +196,24 @@
   
   .resources-buttons {
     flex-direction: column;
+  }
+  
+  .teaser-figure {
+    margin-top: 2rem;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-logo {
+    height: 50px;
+  }
+  
+  .main-title {
+    font-size: 2.5rem;
+  }
+  
+  .teaser-figure {
+    margin-top: 1.5rem;
   }
 } 

@@ -5,10 +5,12 @@
   <div class="title-wrapper">
     <div class="title-with-logo">
       <img src="/icon.png" alt="MindCube Logo" class="title-logo">
-      <h1 class="main-title" id="animated-title">
-        <span class="title-line">Spatial Mental Modeling</span>
-        <span class="title-line">from Limited Views</span>
-      </h1>
+      <div class="title-container">
+        <h1 class="main-title" id="animated-title">
+          Thinking from Limited Views:
+        </h1>
+        <p class="title-subtitle">Spatial Mental Modeling from Limited Views</p>
+      </div>
     </div>
   </div>
   
@@ -111,8 +113,42 @@
 
 <script>
   // Format numbers to show 'k' for thousands
-  function formatNumber(num) {
-    return num > 999 ? (num / 1000).toFixed(1) + 'k' : num;
+  function formatNumber(num: number): string {
+    return num > 999 ? (num / 1000).toFixed(1) + 'k' : num.toString();
+  }
+
+  // Animate title characters
+  function animateTitle() {
+    const titleElement = document.getElementById('animated-title');
+    const subtitleElement = document.querySelector('.title-subtitle');
+    
+    if (titleElement) {
+      const text = titleElement.textContent || '';
+      titleElement.innerHTML = '';
+      
+      // Wrap each character in a span for animation
+      text.split('').forEach((char, index) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space for spaces
+        span.className = 'reveal-char';
+        span.style.animationDelay = `${index * 0.05}s`;
+        titleElement.appendChild(span);
+      });
+    }
+    
+    if (subtitleElement) {
+      const text = subtitleElement.textContent || '';
+      subtitleElement.innerHTML = '';
+      
+      // Wrap each character in a span for animation
+      text.split('').forEach((char, index) => {
+        const span = document.createElement('span');
+        span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space for spaces
+        span.className = 'reveal-char-subtitle';
+        span.style.animationDelay = `${0.8 + index * 0.03}s`;
+        subtitleElement.appendChild(span);
+      });
+    }
   }
 
   // Fetch GitHub stats directly
@@ -151,7 +187,10 @@
   }
 
   // Run when page is loaded
-  document.addEventListener('DOMContentLoaded', fetchGitHubStats);
+  document.addEventListener('DOMContentLoaded', () => {
+    animateTitle();
+    fetchGitHubStats();
+  });
 </script> 
 
 <style>

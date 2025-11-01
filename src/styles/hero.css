@@ -35,15 +35,28 @@
   flex-shrink: 0; 
 }
 
-.main-title { 
-  font-size: 3.75rem; 
-  font-weight: 800; 
-  color: #2a2f6c; 
-  min-height: 1.2em; 
-  flex-shrink: 0;
+.title-container {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.main-title { 
+  font-size: 3.5rem; 
+  font-weight: 800; 
+  color: #2a2f6c; 
+  margin: 0;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.title-subtitle {
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
 }
 
 .title-line {
@@ -171,7 +184,11 @@
   }
   
   .main-title {
-    font-size: 3rem;
+    font-size: 2rem;
+  }
+  
+  .title-subtitle {
+    font-size: 1.4rem;
   }
   
   .subtitle {
@@ -202,7 +219,11 @@
   }
   
   .main-title {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+  }
+  
+  .title-subtitle {
+    font-size: 1.2rem;
   }
   
   .teaser-figure {

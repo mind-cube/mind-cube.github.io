@@ -13,6 +13,15 @@
       </div>
     </div>
   </div>
+
+  <!-- Challenge Announcement Banner -->
+  <a href="/challenge" class="announcement-banner">
+    <span class="announcement-icon">🏆</span>
+    <span class="announcement-text">
+      <strong>NEW!</strong> MindCube Challenge @ CVPR 2026 CVinW Workshop — Join Now!
+    </span>
+    <span class="announcement-arrow">→</span>
+  </a>
   
   <p class="main-subtitle">
     
@@ -269,5 +278,105 @@
 
   .highlight-phrase {
     color: #2a2f6c;
+  }
+
+  /* Announcement Banner Styles */
+  .announcement-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+    transition: all 0.3s ease;
+    animation: banner-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes banner-glow {
+    0%, 100% {
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+    }
+    50% {
+      box-shadow: 0 4px 30px rgba(245, 158, 11, 0.5);
+    }
+  }
+
+  .announcement-banner:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 6px 25px rgba(245, 158, 11, 0.5);
+    text-decoration: none;
+    color: white;
+  }
+
+  .announcement-icon {
+    font-size: 1.25rem;
+    animation: bounce-icon 1s ease-in-out infinite;
+  }
+
+  @keyframes bounce-icon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .announcement-text {
+    line-height: 1.4;
+  }
+
+  .announcement-text strong {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  .announcement-arrow {
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+  }
+
+  .announcement-banner:hover .announcement-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Responsive for announcement banner */
+  @media (max-width: 768px) {
+    .announcement-banner {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      gap: 8px;
+      margin-top: 1rem;
+    }
+
+    .announcement-icon {
+      font-size: 1.1rem;
+    }
+
+    .announcement-text strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .announcement-banner {
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .announcement-arrow {
+      display: none;
+    }
   }
 </style> 

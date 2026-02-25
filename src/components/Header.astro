@@ -4,7 +4,7 @@
 
 <header>
   <div class="container">
-      <a href="#hero" class="info-badge">
+      <a href="/" class="info-badge">
           <img src="/icon.png" alt="MindCube Logo" class="badge-icon">
           <span class="badge-text"><strong>MindCube</strong></span>
       </a>
@@ -16,6 +16,12 @@
                     <li><a href="#leaderboard">Leaderboard</a></li>
                     <li><a href="#results">Key Findings</a></li>
                     <li><a href="#citation">Citation</a></li> -->
+                    <li class="challenge-nav-item">
+                        <a href="/challenge" class="challenge-link">
+                            <span class="challenge-badge-text">🏆 CVinW Challenge</span>
+                            <span class="new-badge">NEW</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">
                             More Research
@@ -104,6 +110,55 @@
   .main-nav a:hover,
   .main-nav a:focus {
       color: #2a2f6c;
+  }
+
+  /* Challenge Nav Item - Eye-catching style */
+  .challenge-nav-item {
+      position: relative;
+  }
+
+  .challenge-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.5rem 1rem !important;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 50px;
+      color: white !important;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+  }
+
+  .challenge-link:hover,
+  .challenge-link:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      color: white !important;
+  }
+
+  .challenge-badge-text {
+      white-space: nowrap;
+  }
+
+  .new-badge {
+      display: inline-block;
+      background: white;
+      color: #d97706;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
   }
 
   /* Dropdown styles */
@@ -278,6 +333,16 @@
       padding: 8px 16px;
       font-size: 0.85rem;
     }
+
+    .challenge-link {
+      padding: 0.4rem 0.75rem !important;
+      font-size: 0.8rem;
+    }
+
+    .new-badge {
+      font-size: 0.55rem;
+      padding: 1px 4px;
+    }
   }
 
   /* Very small screens */
@@ -325,6 +390,25 @@
     .dropdown-item {
       padding: 6px 12px;
       font-size: 0.8rem;
+    }
+
+    .challenge-link {
+      padding: 0.3rem 0.5rem !important;
+      font-size: 0.7rem;
+    }
+
+    .challenge-badge-text {
+      display: none;
+    }
+
+    .challenge-link::before {
+      content: '🏆';
+      font-size: 1rem;
+    }
+
+    .new-badge {
+      font-size: 0.5rem;
+      padding: 1px 3px;
     }
   }
 </style>

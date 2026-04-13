@@ -33,6 +33,10 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
           <i class="fas fa-flask"></i>
           Test Set (Coming Soon)
         </a>
+        <a href="https://eval.ai/web/challenges/challenge-page/2687/overview" target="_blank" class="cta-btn cta-primary">
+          <i class="fas fa-upload"></i>
+          Submission Portal
+        </a>
       </div>
     </div>
   </section>
@@ -69,8 +73,8 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
           </li>
           <li>
             <i class="fas fa-upload"></i>
-            <strong>Submission Portal:</strong> 
-            <span class="coming-soon-text">Coming Soon</span>
+            <strong>Submission Portal:</strong>
+            <a href="https://eval.ai/web/challenges/challenge-page/2687/overview" target="_blank">EvalAI — MindCube Challenge</a>
           </li>
         </ul>
       </div>
@@ -246,21 +250,21 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
         <h4>Submission File Format (JSONL)</h4>
         <p>Submit a single <code>.jsonl</code> file with one JSON object per line, containing:</p>
         <ul class="simple-list">
-          <li><code>question_id</code> (string)</li>
-          <li><code>prediction</code> (string or integer — choose one convention and keep it consistent)</li>
+          <li><code>id</code> (string) — the question ID from the test set</li>
+          <li><code>answer</code> (string) — the predicted option letter (e.g., <code>"A"</code>, <code>"B"</code>, <code>"C"</code>, <code>"D"</code>)</li>
         </ul>
 
         <div class="code-example">
           <div class="code-header">
             <span>Example submission format</span>
           </div>
-          <pre><code set:html={`{"question_id":"mc_000001","prediction":"B"}
-{"question_id":"mc_000002","prediction":"A"}`}></code></pre>
+          <pre><code set:html={`{"id": "among_group693_q1_5_2", "answer": "C"}
+{"id": "around_group012_q3_1_0", "answer": "A"}`}></code></pre>
         </div>
 
         <h4>Requirements</h4>
         <ul class="simple-list">
-          <li>Provide exactly one prediction for each <code>question_id</code> in the test set.</li>
+          <li>Provide exactly one prediction for each <code>id</code> in the test set.</li>
           <li><strong>Duplicate IDs:</strong> Keep last / invalid submission</li>
           <li><strong>Missing IDs:</strong> Count as incorrect / invalid submission</li>
           <li><em>(Recommended)</em> You may gzip the file for size: <code>predictions.jsonl.gz</code></li>
@@ -282,24 +286,28 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
           </div>
           <div class="step">
             <span class="step-number">4</span>
-            <p>Submit via upload form <span class="coming-soon-text">(coming soon)</span> or email to 
-              <a href="mailto:qinengw@u.northwestern.edu">qinengw@u.northwestern.edu</a> 
-              with subject: <code>MindCube Challenge Submission: TeamName</code></p>
+            <p>Submit your predictions on
+              <a href="https://eval.ai/web/challenges/challenge-page/2687/overview" target="_blank">EvalAI</a>.
+              Questions? Contact <a href="mailto:qinengw@u.northwestern.edu">qinengw@u.northwestern.edu</a>.</p>
           </div>
         </div>
 
         <div class="deadline-box">
           <div class="deadline-item">
             <i class="fas fa-repeat"></i>
-            <strong>Submission Limit:</strong> Up to 3 submissions per team; last submission before the deadline counts
+            <strong>Submission Limit:</strong> Up to 5 submissions per day, 100 submissions total per team across the challenge
+          </div>
+          <div class="deadline-item">
+            <i class="fas fa-flask"></i>
+            <strong>Dev Phase Deadline:</strong> May 22, 2026 (AoE)
           </div>
           <div class="deadline-item">
             <i class="fas fa-clock"></i>
-            <strong>Deadline:</strong> <span class="tbd">TBD</span>
+            <strong>Test Phase Deadline:</strong> May 25, 2026 (AoE)
           </div>
           <div class="deadline-item">
             <i class="fas fa-trophy"></i>
-            <strong>Results Announcement:</strong> <span class="tbd">TBD</span>
+            <strong>Results Announcement:</strong> May 31, 2026
           </div>
         </div>
       </div>
@@ -311,7 +319,7 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
         <ul class="rules-list">
           <li>
             <i class="fas fa-database"></i>
-            <strong>External data / models / APIs:</strong> <span class="tbd">Allowed or disallowed — TBD; if allowed, require disclosure</span>
+            <strong>External data / models / APIs:</strong> Open-source models and external data are allowed. <span class="not-allowed">Commercial API-only (closed-source) models are disallowed.</span> Please disclose any external resources used in your method description.
           </li>
           <li>
             <i class="fas fa-user-slash"></i>

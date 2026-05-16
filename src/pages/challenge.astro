@@ -29,9 +29,9 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
           <i class="fab fa-github"></i>
           Dataset & Code
         </a>
-        <a href="#" class="cta-btn cta-disabled" title="Coming Soon">
+        <a href="https://drive.google.com/file/d/1w24JgRKbT2KzTyjBdJE6d_1NUpcOxl7d/view?usp=sharing" target="_blank" class="cta-btn cta-primary">
           <i class="fas fa-flask"></i>
-          Test Set (Coming Soon)
+          Test Set (Released)
         </a>
         <a href="https://eval.ai/web/challenges/challenge-page/2687/overview" target="_blank" class="cta-btn cta-primary">
           <i class="fas fa-upload"></i>
@@ -43,7 +43,26 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
 
   <section class="challenge-content">
     <div class="challenge-container">
-      
+
+      <!-- Announcement Banner -->
+      <div class="announcement-banner">
+        <div class="announcement-icon">📢</div>
+        <div class="announcement-text">
+          <h3>MindCube Test Set is now released!</h3>
+          <p>
+            The held-out test set is available for download here:
+            <a href="https://drive.google.com/file/d/1w24JgRKbT2KzTyjBdJE6d_1NUpcOxl7d/view?usp=sharing" target="_blank">MindCube Challenge Test Set</a>.
+          </p>
+          <p>
+            <strong>Heads-up:</strong> The Test Phase on EvalAI is currently experiencing an issue. We are actively
+            working with the EvalAI team to fix it. In the meantime, you can already download the test set and
+            run your results locally — we will notify everyone (via the
+            <a href="https://join.slack.com/t/mindcubechallenge2026/shared_invite/zt-3v50k4gqe-BUib8kOULZ052y4hcoEZqw" target="_blank">Challenge Slack</a>)
+            as soon as submissions are open.
+          </p>
+        </div>
+      </div>
+
       <!-- Hosted By Section -->
       <div class="content-block hosted-by">
         <div class="hosted-icon">🏛️</div>
@@ -98,7 +117,7 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
         <ol class="numbered-list">
           <li>Train / fine-tune on the MindCube training set.</li>
           <li>Develop and validate on <code>MindCube_tinybench</code>.</li>
-          <li>Run inference on the held-out test set (to be released) and submit predictions.</li>
+          <li>Run inference on the held-out test set (now released) and submit predictions.</li>
         </ol>
       </div>
 
@@ -123,7 +142,7 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
             <div class="split-icon">🏆</div>
             <h4>Test (Held-out)</h4>
             <p>Final evaluation set</p>
-            <span class="status-badge status-coming">Coming Soon</span>
+            <span class="status-badge status-public">Released</span>
           </div>
         </div>
 
@@ -279,7 +298,8 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
         <div class="submission-steps">
           <div class="step">
             <span class="step-number">1</span>
-            <p>Download the held-out test set <span class="coming-soon-text">(coming soon)</span></p>
+            <p>Download the held-out test set from the
+              <a href="https://drive.google.com/file/d/1w24JgRKbT2KzTyjBdJE6d_1NUpcOxl7d/view?usp=sharing" target="_blank">Challenge Test Set link</a>.</p>
           </div>
           <div class="step">
             <span class="step-number">2</span>
@@ -810,6 +830,47 @@ const pageTitle = "MindCube Challenge @ CVPR 2026 CVinW";
   .status-coming {
     background: #fef3c7;
     color: #92400e;
+  }
+
+  /* Announcement Banner */
+  .announcement-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1px solid #6ee7b7;
+    border-left: 5px solid #10b981;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .announcement-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .announcement-text h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #065f46;
+  }
+
+  .announcement-text p {
+    margin: 0 0 0.5rem;
+    font-size: 0.95rem;
+    color: #064e3b;
+    line-height: 1.6;
+  }
+
+  .announcement-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .announcement-text a {
+    color: #047857;
+    font-weight: 600;
+    text-decoration: underline;
   }
 
   /* Info Box */

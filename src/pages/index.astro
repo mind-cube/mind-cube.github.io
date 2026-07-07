@@ -16,9 +16,91 @@ import '../styles/resources.css';
 // import '../styles/trajectoryViewer.css';  // Hidden but preserved
 import '../styles/datasetViewer.css';
 
-const pageTitle = "Spatial Mental Modeling from Limited Views - MindCube";
+const pageTitle = "MindCube: Spatial Mental Modeling from Limited Views | VLM Spatial Reasoning Benchmark";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ScholarlyArticle",
+      "headline": "MindCube: Spatial Mental Modeling from Limited Views",
+      "name": "MindCube: Spatial Mental Modeling from Limited Views",
+      "url": "https://mind-cube.github.io/",
+      "sameAs": "https://arxiv.org/abs/2506.21458",
+      "datePublished": "2025-06-26",
+      "dateModified": "2026-03-31",
+      "image": "https://mind-cube.github.io/og-card.jpg",
+      "abstract": "Can Vision-Language Models (VLMs) imagine the full scene from just a few views, like humans do? Humans form spatial mental models naturally, internal representations of unseen space, to reason about layout, perspective, and motion. Our MindCube benchmark with 21,154 questions across 3,268 images exposes this critical gap, where existing VLMs exhibit near-random performance.",
+      "keywords": "MindCube, spatial mental models, spatial reasoning, vision-language models, VLM, benchmark, cognitive map, perspective taking, mental simulation, map-then-reason, multi-view, spatial QA",
+      "author": [
+        { "@type": "Person", "name": "Qineng Wang" },
+        { "@type": "Person", "name": "Baiqiao Yin" },
+        { "@type": "Person", "name": "Pingyue Zhang" },
+        { "@type": "Person", "name": "Jianshu Zhang" },
+        { "@type": "Person", "name": "Kangrui Wang" },
+        { "@type": "Person", "name": "Zihan Wang" },
+        { "@type": "Person", "name": "Jieyu Zhang" },
+        { "@type": "Person", "name": "Keshigeyan Chandrasegaran" },
+        { "@type": "Person", "name": "Han Liu" },
+        { "@type": "Person", "name": "Ranjay Krishna" },
+        { "@type": "Person", "name": "Saining Xie" },
+        { "@type": "Person", "name": "Jiajun Wu" },
+        { "@type": "Person", "name": "Li Fei-Fei" },
+        { "@type": "Person", "name": "Manling Li", "@id": "https://limanling.github.io/#person", "url": "https://limanling.github.io/" }
+      ],
+      "publisher": { "@type": "Organization", "name": "arXiv" }
+    },
+    {
+      "@type": "Dataset",
+      "name": "MindCube",
+      "description": "A spatial mental modeling benchmark with 21,154 questions across 3,268 multi-view images, testing whether VLMs can represent positions (cognitive mapping), orientations (perspective-taking), and dynamics (mental simulation) from limited views.",
+      "url": "https://mind-cube.github.io/",
+      "sameAs": [
+        "https://huggingface.co/datasets/MLL-Lab/MindCube",
+        "https://github.com/mll-lab-nu/MindCube",
+        "https://arxiv.org/abs/2506.21458"
+      ],
+      "creator": { "@type": "Organization", "name": "MLL Lab, Northwestern University" },
+      "keywords": "MindCube, spatial mental models, spatial reasoning, VLM, benchmark, multi-view, spatial QA"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "MindCube",
+      "codeRepository": "https://github.com/mll-lab-nu/MindCube",
+      "programmingLanguage": "Python"
+    },
+    {
+      "@type": "WebSite",
+      "name": "MindCube",
+      "url": "https://mind-cube.github.io/"
+    }
+  ]
+};
 ---
 <Layout title={pageTitle}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <!-- Google Scholar (Highwire Press) citation tags. This page is dedicated to one paper. -->
+    <meta name="citation_title" content="MindCube: Spatial Mental Modeling from Limited Views" />
+    <meta name="citation_author" content="Qineng Wang" />
+    <meta name="citation_author" content="Baiqiao Yin" />
+    <meta name="citation_author" content="Pingyue Zhang" />
+    <meta name="citation_author" content="Jianshu Zhang" />
+    <meta name="citation_author" content="Kangrui Wang" />
+    <meta name="citation_author" content="Zihan Wang" />
+    <meta name="citation_author" content="Jieyu Zhang" />
+    <meta name="citation_author" content="Keshigeyan Chandrasegaran" />
+    <meta name="citation_author" content="Han Liu" />
+    <meta name="citation_author" content="Ranjay Krishna" />
+    <meta name="citation_author" content="Saining Xie" />
+    <meta name="citation_author" content="Jiajun Wu" />
+    <meta name="citation_author" content="Li Fei-Fei" />
+    <meta name="citation_author" content="Manling Li" />
+    <meta name="citation_publication_date" content="2025/06/26" />
+    <meta name="citation_arxiv_id" content="2506.21458" />
+    <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2506.21458" />
+    <meta name="citation_abstract_html_url" content="https://arxiv.org/abs/2506.21458" />
+  </Fragment>
   <!-- 1. Teaser Section -->
   <Hero />
   

@@ -1,0 +1,51 @@
+# MindCube: Spatial Mental Modeling from Limited Views. Full reference for LLMs and RAG tools
+
+Paper: "MindCube: Spatial Mental Modeling from Limited Views", arXiv:2506.21458 (cs.AI), first submitted June 26, 2025 (v2: March 31, 2026).
+Authors: Qineng Wang, Baiqiao Yin, Pingyue Zhang, Jianshu Zhang, Kangrui Wang, Zihan Wang, Jieyu Zhang, Keshigeyan Chandrasegaran, Han Liu, Ranjay Krishna, Saining Xie, Jiajun Wu, Li Fei-Fei, Manling Li.
+Project page: https://mind-cube.github.io/
+Challenge: https://mind-cube.github.io/challenge (CVinW Workshop @ CVPR 2026)
+Code: https://github.com/mll-lab-nu/MindCube
+Dataset: https://huggingface.co/datasets/MLL-Lab/MindCube
+
+## What is MindCube?
+
+MindCube is a benchmark that tests whether Vision-Language Models (VLMs) can imagine a full scene from just a few views, the way humans do. It contains 21,154 questions across 3,268 multi-view images. Existing VLMs exhibit near-random performance on it.
+
+## What is a spatial mental model?
+
+A spatial mental model is an internal representation of unseen space. Humans form them naturally to reason about layout, perspective, and motion: from a few glimpses of a room, people can answer what lies beyond the visible frame. MindCube measures whether VLMs build such representations from limited views.
+
+## What abilities does MindCube test?
+
+Three abilities, all from limited views: representing positions (cognitive mapping), orientations (perspective-taking), and dynamics (mental simulation for "what-if" movements). Questions are grounded in multi-view observations of real scenes, asking, for example, what is to the left of an object as seen from a different viewpoint.
+
+## How do current VLMs perform?
+
+Near-randomly. The benchmark exposes a critical gap between VLM spatial reasoning and human spatial mental modeling, covering both position and orientation reasoning and mental simulation of unseen viewpoints.
+
+## What actually helps?
+
+The "map-then-reason" approach: jointly train the model to first generate a cognitive map of the scene and then reason over it. This lifts accuracy from 37.8% to 57.8% (a gain of 20.0 points). Adding reinforcement learning on top pushes accuracy to 61.3% (a gain of 23.5 points over the baseline).
+
+## What is the MindCube Challenge?
+
+A challenge at the CVinW Workshop, CVPR 2026, built on the MindCube benchmark: spatial question answering from limited multi-view observations. Details: https://mind-cube.github.io/challenge
+
+## Key numbers at a glance
+
+- 21,154 questions; 3,268 multi-view images.
+- Existing VLMs: near-random accuracy.
+- Map-then-reason: 37.8% to 57.8% (+20.0).
+- Map-then-reason + reinforcement learning: 61.3% (+23.5).
+
+## Citation
+
+@misc{wang2025mindcube,
+  title={MindCube: Spatial Mental Modeling from Limited Views},
+  author={Qineng Wang and Baiqiao Yin and Pingyue Zhang and Jianshu Zhang and Kangrui Wang and Zihan Wang and Jieyu Zhang and Keshigeyan Chandrasegaran and Han Liu and Ranjay Krishna and Saining Xie and Jiajun Wu and Li Fei-Fei and Manling Li},
+  year={2025},
+  eprint={2506.21458},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2506.21458},
+}

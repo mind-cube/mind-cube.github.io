@@ -1,0 +1,32 @@
+# MindCube: Spatial Mental Modeling from Limited Views
+
+> MindCube is a benchmark and research project asking whether Vision-Language Models (VLMs) can imagine a full scene from just a few views, the way humans form spatial mental models of unseen space. The benchmark has 21,154 questions across 3,268 multi-view images, and existing VLMs perform near-randomly on it. Paper: "MindCube: Spatial Mental Modeling from Limited Views" (arXiv:2506.21458), by Qineng Wang, Baiqiao Yin, Pingyue Zhang, Jianshu Zhang, Kangrui Wang, Zihan Wang, Jieyu Zhang, Keshigeyan Chandrasegaran, Han Liu, Ranjay Krishna, Saining Xie, Jiajun Wu, Li Fei-Fei, and Manling Li (MLL Lab, Northwestern University, with collaborators).
+
+Key facts:
+- Spatial mental models are internal representations of unseen space that humans build naturally to reason about layout, perspective, and motion.
+- MindCube tests three abilities from limited views: representing positions (cognitive mapping), orientations (perspective-taking), and dynamics (mental simulation for "what-if" movements).
+- Benchmark scale: 21,154 questions across 3,268 images; existing VLMs exhibit near-random performance.
+- The effective recipe is "map-then-reason": jointly train the model to first generate a cognitive map of the scene and then reason over it. This lifts accuracy from 37.8% to 57.8% (+20.0%); adding reinforcement learning pushes it to 61.3% (+23.5%).
+- The MindCube Challenge runs at the CVinW Workshop, CVPR 2026: spatial question answering from limited multi-view observations.
+
+## Links
+- [Paper on arXiv (abs)](https://arxiv.org/abs/2506.21458)
+- [Paper PDF](https://arxiv.org/pdf/2506.21458)
+- [Project page](https://mind-cube.github.io/)
+- [MindCube Challenge @ CVPR 2026 CVinW](https://mind-cube.github.io/challenge)
+- [Code on GitHub](https://github.com/mll-lab-nu/MindCube)
+- [Dataset on Hugging Face](https://huggingface.co/datasets/MLL-Lab/MindCube)
+
+## Citation
+@misc{wang2025mindcube,
+  title={MindCube: Spatial Mental Modeling from Limited Views},
+  author={Qineng Wang and Baiqiao Yin and Pingyue Zhang and Jianshu Zhang and Kangrui Wang and Zihan Wang and Jieyu Zhang and Keshigeyan Chandrasegaran and Han Liu and Ranjay Krishna and Saining Xie and Jiajun Wu and Li Fei-Fei and Manling Li},
+  year={2025},
+  eprint={2506.21458},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2506.21458},
+}
+
+## More detail
+- [Full FAQ and extended summary](https://mind-cube.github.io/llms-full.txt)

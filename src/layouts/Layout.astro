@@ -5,18 +5,43 @@ import '../styles/global.css';
 import Header from '../components/Header.astro'; // Import the Header component we will create
 import Footer from '../components/Footer.astro';
 
-const { title } = Astro.props;
+const {
+    title,
+    description = "MindCube: a benchmark of 21,154 questions on 3,268 multi-view images testing whether vision-language models build spatial mental models of unseen space. VLMs are near-random; map-then-reason training lifts accuracy from 37.8% to 57.8%, and to 61.3% with reinforcement learning.",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og-card.jpg', Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/png" href="/icon.png" />
         <link rel="apple-touch-icon" href="/icon.png" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content="MindCube, spatial mental models, spatial mental modeling, spatial reasoning, vision-language models, VLM, benchmark, cognitive map, perspective taking, mental simulation, map-then-reason, multi-view, spatial QA, limited views, embodied AI" />
+        <link rel="canonical" href={canonical} />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="MindCube" />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <!-- Twitter / X card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@ManlingLi_" />
+        <meta name="twitter:creator" content="@ManlingLi_" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <slot name="head" />
         {/* We can link fonts or global styles here if necessary */}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

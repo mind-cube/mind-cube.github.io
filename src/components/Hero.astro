@@ -6,10 +6,10 @@
     <div class="title-with-logo">
       <img src="/icon.png" alt="MindCube Logo" class="title-logo">
       <div class="title-container">
-        <h1 class="main-title" id="animated-title">
-          Thinking from Limited Views:
+        <h1 class="main-title">
+          MindCube: Spatial Mental Modeling from Limited Views
         </h1>
-        <p class="title-subtitle">Spatial Mental Modeling from Limited Views</p>
+        <p class="title-subtitle">Can VLMs imagine the full scene from just a few views, like humans do?</p>
       </div>
     </div>
   </div>
@@ -149,19 +149,8 @@
       });
     }
     
-    if (subtitleElement) {
-      const text = subtitleElement.textContent || '';
-      subtitleElement.innerHTML = '';
-      
-      // Wrap each character in a span for animation
-      text.split('').forEach((char, index) => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space for spaces
-        span.className = 'reveal-char-subtitle';
-        span.style.animationDelay = `${0.8 + index * 0.03}s`;
-        subtitleElement.appendChild(span);
-      });
-    }
+    // Subtitle fades in as a whole line (per-character spans break word
+    // wrapping on narrow screens, since each char becomes its own inline box).
   }
 
   // Fetch GitHub stats directly

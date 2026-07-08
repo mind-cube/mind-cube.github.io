@@ -739,6 +739,27 @@ const pageDescription = "The MindCube Challenge at the CVinW Workshop, CVPR 2026
     color: #be185d;
   }
 
+  /* Safety net: any bare <pre> scrolls inside itself instead of widening the page */
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Long unbreakable strings (URLs, ids, inline code) must wrap instead of
+     overflowing off-screen; body clips overflow-x, so anything wider than the
+     viewport is silently cut off on phones. */
+  /* Links and inline code carry long unbreakable strings (URLs, ids): allow
+     breaks anywhere so they never push the page wider than the phone screen.
+     Plain text only breaks when a whole word cannot fit. */
+  .challenge-container a,
+  .challenge-container code:not(pre code) {
+    overflow-wrap: anywhere;
+  }
+  .challenge-container li,
+  .challenge-container p {
+    overflow-wrap: break-word;
+  }
+
   .code-example {
     background: #1e293b;
     border-radius: 12px;
@@ -968,6 +989,9 @@ const pageDescription = "The MindCube Challenge at the CVinW Workshop, CVPR 2026
 
   .rules-list li {
     display: flex;
+    /* text between inline tags forms anonymous flex items; without wrapping
+       they line up in one row and get clipped on phones */
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem;

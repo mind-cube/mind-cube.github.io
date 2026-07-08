@@ -353,7 +353,8 @@ pre.cogmap-content::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 1.5rem 2rem;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  /* minmax(0, …) keeps long <option> text from blowing up the track's min-content width */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
   gap: 1.5rem;
   align-items: center;
 }
@@ -381,6 +382,9 @@ pre.cogmap-content::-webkit-scrollbar-thumb:hover {
   font-weight: 500;
   cursor: pointer;
   transition: box-shadow 0.2s;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 #dataset-viewer .control-select:focus {
@@ -847,7 +851,7 @@ pre.cogmap-content::-webkit-scrollbar-thumb:hover {
 /* 响应式设计 */
 @media (max-width: 768px) {
   #dataset-viewer .controls-panel {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     text-align: center;
   }

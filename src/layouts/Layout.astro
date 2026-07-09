@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro';
 
 const {
     title,
-    description = "MindCube: a benchmark of 21,154 questions on 3,268 multi-view images testing whether vision-language models build spatial mental models of unseen space. VLMs are near-random; map-then-reason training lifts accuracy from 37.8% to 57.8%, and to 61.3% with reinforcement learning.",
+    description = "MindCube: a spatial reasoning benchmark of 21,154 questions on 3,268 multi-view images, testing whether vision-language models build spatial mental models of unseen space and reason from limited views. VLMs are near-random; map-then-reason training lifts accuracy from 37.8% to 57.8%, and to 61.3% with reinforcement learning.",
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL('/og-card.jpg', Astro.site).href;

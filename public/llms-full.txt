@@ -15,6 +15,10 @@ MindCube is a benchmark that tests whether Vision-Language Models (VLMs) can ima
 
 A spatial mental model is an internal representation of unseen space. Humans form them naturally to reason about layout, perspective, and motion: from a few glimpses of a room, people can answer what lies beyond the visible frame. MindCube measures whether VLMs build such representations from limited views.
 
+## What is spatial reasoning from limited views?
+
+Spatial reasoning is reasoning about the positions, orientations, and motion of objects in space. In the MindCube setting the model sees only a few views of a scene, so it must infer spatial relations it never directly observes, such as what lies to the left of an object when seen from a different viewpoint. MindCube frames this as spatial question answering over multi-view images, and shows that VLMs reason far better when they first construct an internal structured spatial representation (a cognitive map) and then reason over it.
+
 ## What abilities does MindCube test?
 
 Three abilities, all from limited views: representing positions (cognitive mapping), orientations (perspective-taking), and dynamics (mental simulation for "what-if" movements). Questions are grounded in multi-view observations of real scenes, asking, for example, what is to the left of an object as seen from a different viewpoint.

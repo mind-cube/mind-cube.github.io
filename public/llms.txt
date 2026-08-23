@@ -4,6 +4,7 @@
 
 Key facts:
 - Spatial mental models are internal representations of unseen space that humans build naturally to reason about layout, perspective, and motion.
+- Spatial reasoning from limited views means answering questions about layout, perspective, and motion in a scene that is only partially observed; MindCube evaluates it with spatial question answering grounded in multi-view images.
 - MindCube tests three abilities from limited views: representing positions (cognitive mapping), orientations (perspective-taking), and dynamics (mental simulation for "what-if" movements).
 - Benchmark scale: 21,154 questions across 3,268 images; existing VLMs exhibit near-random performance.
 - The effective recipe is "map-then-reason": jointly train the model to first generate a cognitive map of the scene and then reason over it. This lifts accuracy from 37.8% to 57.8% (+20.0%); adding reinforcement learning pushes it to 61.3% (+23.5%).
